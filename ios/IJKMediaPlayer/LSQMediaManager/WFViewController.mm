@@ -54,8 +54,10 @@ enum
     m_nHeight= [frameData.height intValue];
     
     m_bNeedSleep = NO;
-    [self drawYUV];
+    
     [m_YUVDataLock unlock];
+    
+    [self drawYUV];
 }
 
 - (void)viewDidLoad

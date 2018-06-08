@@ -19,10 +19,12 @@
 #import "LSPlayerMovieDecoder.h"
 #import "WFViewController.h"
 //#import "IJKSDLGLView.h"
+#import "YUVDisplayGLViewController.h"
+#import "OpenGLView20.h"
 
 @interface IJKDemoInputURLViewController () <UITextViewDelegate,MovieDecoderDelegate>{
     LSPlayerMovieDecoder* decoder;
-    WFViewController *_panoplayer;
+    OpenGLView20 *_panoplayer;
     unsigned char* m_pBuffer;
 
 }
@@ -56,11 +58,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _panoplayer = [[WFViewController alloc] init];
-    _panoplayer.view.backgroundColor = [UIColor blueColor];
-    _panoplayer.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+    _panoplayer = [[OpenGLView20 alloc] init];
+    _panoplayer.backgroundColor = [UIColor blueColor];
+    _panoplayer.frame = self.view.frame;
 //    NSLog(@" frame size %f,%f",_panoplayer.frame.size.width,_panoplayer.frame.size.height);
-    [self.view addSubview:_panoplayer.view];
+    [self.view addSubview:_panoplayer];
 
 }
 
@@ -92,7 +94,8 @@
 -(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame;{
 
     AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
-    [_panoplayer WriteYUVFrame:frameData];
+//    [_panoplayer WriteYUVFrame:frameData];
+    [_panoplayer displayYUV420pData:frame->pixels[0] width:frame->w height:frame->h];
 }
 
 
@@ -113,8 +116,8 @@
     [frameData.colorPlane1 appendBytes:frame->pixels[0] length:frame->w/2];
     [frameData.colorPlane2 appendBytes:frame->pixels[0] length:frame->w/2];
     frameData.data0 = frame->pixels[0];
-    frameData.data1 = frame->pixels[0];
-    frameData.data2 = frame->pixels[0];
+    frameData.data1 = frame->pixels[1];
+    frameData.data2 = frame->pixels[2];
     //    for (int i=0; i<frame->h; i++){
 //        [frameData.colorPlane0 appendBytes:(void*) (frame->pixels[0]+i*frame->pitches[0])
 //                                    length:frame->w];
