@@ -1,0 +1,14 @@
+prefix=/Users/chenjianji/Desktop/ijkplayer-maste_lsq/ios/build/ffmpeg-i386/output
+exec_prefix=${prefix}
+libdir=/Users/chenjianji/Desktop/ijkplayer-maste_lsq/ios/build/ffmpeg-i386/output/lib
+includedir=/Users/chenjianji/Desktop/ijkplayer-maste_lsq/ios/build/ffmpeg-i386/output/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 57.107.100
+Requires: libavutil >= 55.78.100
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavcodec -lm -lz -pthread -pthread -framework CoreImage -framework AVFoundation
+Libs.private: 
+Cflags: -I${includedir}

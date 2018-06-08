@@ -1,0 +1,14 @@
+prefix=/Users/chenjianji/Desktop/ijkplayer-maste_lsq/ios/build/ffmpeg-arm64/output
+exec_prefix=${prefix}
+libdir=/Users/chenjianji/Desktop/ijkplayer-maste_lsq/ios/build/ffmpeg-arm64/output/lib
+includedir=/Users/chenjianji/Desktop/ijkplayer-maste_lsq/ios/build/ffmpeg-arm64/output/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 55.78.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil -lm
+Libs.private: 
+Cflags: -I${includedir}
