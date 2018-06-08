@@ -16,8 +16,16 @@
 
 #import "IJKDemoInputURLViewController.h"
 #import "IJKMoviePlayerViewController.h"
+#import "LSPlayerMovieDecoder.h"
+#import "WFViewController.h"
+//#import "IJKSDLGLView.h"
 
-@interface IJKDemoInputURLViewController () <UITextViewDelegate>
+@interface IJKDemoInputURLViewController () <UITextViewDelegate,MovieDecoderDelegate>{
+    LSPlayerMovieDecoder* decoder;
+    WFViewController *_panoplayer;
+    unsigned char* m_pBuffer;
+
+}
 
 @property(nonatomic,strong) IBOutlet UITextView *textView;
 
@@ -35,26 +43,123 @@
     return self;
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    NSLog(@"video plugin deallo");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [decoder stop];
+    [decoder cleargc];
+    decoder.delegate = nil;
+    decoder = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _panoplayer = [[WFViewController alloc] init];
+    _panoplayer.view.backgroundColor = [UIColor blueColor];
+    _panoplayer.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+//    NSLog(@" frame size %f,%f",_panoplayer.frame.size.width,_panoplayer.frame.size.height);
+    [self.view addSubview:_panoplayer.view];
+
 }
 
 - (void)onClickPlayButton {
-    self.textView.text = @"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8";
-    NSURL *url = [NSURL URLWithString:self.textView.text];
-    NSString *scheme = [[url scheme] lowercaseString];
+    NSString *path;
+
+//    path = @"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear0/prog_index.m3u8";
+//    path = @"http://media.detu.com/@/17717910-8057-4FDF-2F33-F8B1F68282395/2016-08-22/57baeda5920ea-similar.mp4";
+//    path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
+    path =  [[NSBundle mainBundle] pathForResource:@"IMG_4075" ofType:@"MP4"];
     
-    if ([scheme isEqualToString:@"http"]
-        || [scheme isEqualToString:@"https"]
-        || [scheme isEqualToString:@"rtmp"]) {
-        [IJKVideoViewController presentFromViewController:self withTitle:[NSString stringWithFormat:@"URL: %@", url] URL:url completion:^{
-//            [self.navigationController popViewControllerAnimated:NO];
-        }];
-    }
+    decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
+    decoder.delegate = self;
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    [self onClickPlayButton];
+-(void)movieDecoderDidFinishDecoding{
+    
 }
+-(void)movieDecoderDidSeeked{
+    
+}
+-(void)movieDecoderError:(NSError *)error;{
+    
+}
+-(void)moviceDecoderPlayItemState:(MovieDecoderPlayItemState)state;{
+    
+}
+
+-(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame;{
+
+    AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
+    [_panoplayer WriteYUVFrame:frameData];
+}
+
+
+-(AVFrameData *) createFrameData: (SDL_VoutOverlay*) frame
+                     trimPadding: (BOOL) trim{
+
+    AVFrameData *frameData = [[AVFrameData alloc] init];
+    if (!frame->pixels[0]) {
+        return frameData;
+    }
+    frameData.width = [[NSNumber alloc] initWithInt:frame->w];
+    frameData.height = [[NSNumber alloc] initWithInt:frame->h];
+    frameData.colorPlane0 = [[NSMutableData alloc] init];
+    frameData.colorPlane1 = [[NSMutableData alloc] init];
+    frameData.colorPlane2 = [[NSMutableData alloc] init];
+    
+    [frameData.colorPlane0 appendBytes:frame->pixels[0] length:frame->w];
+    [frameData.colorPlane1 appendBytes:frame->pixels[0] length:frame->w/2];
+    [frameData.colorPlane2 appendBytes:frame->pixels[0] length:frame->w/2];
+    frameData.data0 = frame->pixels[0];
+    frameData.data1 = frame->pixels[0];
+    frameData.data2 = frame->pixels[0];
+    //    for (int i=0; i<frame->h; i++){
+//        [frameData.colorPlane0 appendBytes:(void*) (frame->pixels[0]+i*frame->pitches[0])
+//                                    length:frame->w];
+//    }
+//    for (int i=0; i<frame->h/2; i++){
+//        [frameData.colorPlane1 appendBytes:(void*) (frame->pixels[1]+i*frame->pitches[1])
+//                                    length:frame->w/2];
+//        [frameData.colorPlane2 appendBytes:(void*) (frame->pixels[2]+i*frame->pitches[2])
+//                                    length:frame->w/2];
+//    }
+    frameData.lineSize0 = [[NSNumber alloc] initWithInt:frame->w];
+    frameData.lineSize1 = [[NSNumber alloc] initWithInt:frame->w/2];
+    frameData.lineSize2 = [[NSNumber alloc] initWithInt:frame->w/2];
+
+//    if (trim){
+//        frameData.colorPlane0 = [[NSMutableData alloc] init];
+//        frameData.colorPlane1 = [[NSMutableData alloc] init];
+//        frameData.colorPlane2 = [[NSMutableData alloc] init];
+//        for (int i=0; i<frame->height; i++){
+//            [frameData.colorPlane0 appendBytes:(void*) (frame->data[0]+i*frame->linesize[0])
+//                                        length:frame->width];
+//        }
+//        for (int i=0; i<frame->height/2; i++){
+//            [frameData.colorPlane1 appendBytes:(void*) (frame->data[1]+i*frame->linesize[1])
+//                                        length:frame->width/2];
+//            [frameData.colorPlane2 appendBytes:(void*) (frame->data[2]+i*frame->linesize[2])
+//                                        length:frame->width/2];
+//        }
+//        frameData.lineSize0 = [[NSNumber alloc] initWithInt:frame->width];
+//        frameData.lineSize1 = [[NSNumber alloc] initWithInt:frame->width/2];
+//        frameData.lineSize2 = [[NSNumber alloc] initWithInt:frame->width/2];
+//    }else{
+//        frameData.colorPlane0 = [[NSMutableData alloc] initWithBytes:frame->data[0] length:frame->linesize[0]*frame->height];
+//        frameData.colorPlane1 = [[NSMutableData alloc] initWithBytes:frame->data[1] length:frame->linesize[1]*frame->height/2];
+//        frameData.colorPlane2 = [[NSMutableData alloc] initWithBytes:frame->data[2] length:frame->linesize[2]*frame->height/2];
+//        frameData.lineSize0 = [[NSNumber alloc] initWithInt:frame->linesize[0]];
+//        frameData.lineSize1 = [[NSNumber alloc] initWithInt:frame->linesize[1]];
+//        frameData.lineSize2 = [[NSNumber alloc] initWithInt:frame->linesize[2]];
+//    }
+//
+//    frameData.width = [[NSNumber alloc] initWithInt:frame->width];
+//    frameData.height = [[NSNumber alloc] initWithInt:frame->height];
+    return frameData;
+
+}
+
 
 @end

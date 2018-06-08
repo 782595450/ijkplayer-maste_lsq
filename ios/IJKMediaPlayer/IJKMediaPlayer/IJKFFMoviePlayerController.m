@@ -34,6 +34,13 @@
 #import "ijkioapplication.h"
 #include "string.h"
 
+#include "ijkplayer/ijkplayer.h"
+#include "ijkplayer/ijkplayer_internal.h"
+#include "ijkplayer/ff_ffplay_def.h"
+//add for liveplayer by hcm
+//#include "decode.h"
+#include "ijksdl_vout_ios_gles2.h"
+
 static const char *kIJKFFRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001";
 
 // It means you didn't call shutdown if you found this object leaked.
@@ -180,6 +187,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 
     self = [super init];
     if (self) {
+        // ffmpeg全局初始化
         ijkmp_global_init();
         ijkmp_global_set_inject_callback(ijkff_inject_callback);
 
@@ -195,7 +203,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         _scalingMode = IJKMPMovieScalingModeAspectFit;
         _shouldAutoplay = YES;
         memset(&_asyncStat, 0, sizeof(_asyncStat));
-        memset(&_cacheStat, 0, sizeof(_cacheStat));
+//        memset(&_cacheStat, 0, sizeof(_cacheStat));
         _monitor = [[IJKFFMonitor alloc] init];
 
         // init media resource
@@ -204,46 +212,61 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         // init player
         _mediaPlayer = ijkmp_ios_create(media_player_msg_loop);
         _msgPool = [[IJKFFMoviePlayerMessagePool alloc] init];
-        IJKWeakHolder *weakHolder = [IJKWeakHolder new];
-        weakHolder.object = self;
+//        IJKWeakHolder *weakHolder = [IJKWeakHolder new];
+//        weakHolder.object = self;
 
         ijkmp_set_weak_thiz(_mediaPlayer, (__bridge_retained void *) self);
-        ijkmp_set_inject_opaque(_mediaPlayer, (__bridge_retained void *) weakHolder);
-        ijkmp_set_ijkio_inject_opaque(_mediaPlayer, (__bridge_retained void *)weakHolder);
+        ijkmp_set_inject_opaque(_mediaPlayer, (__bridge_retained void *) self);
         ijkmp_set_option_int(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "start-on-prepared", _shouldAutoplay ? 1 : 0);
 
-        // init video sink
-        _glView = [[IJKSDLGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        _glView.isThirdGLView = NO;
-        _view = _glView;
-        _hudViewController = [[IJKSDLHudViewController alloc] init];
-        [_hudViewController setRect:_glView.frame];
-        _shouldShowHudView = NO;
-        _hudViewController.tableView.hidden = YES;
-        [_view addSubview:_hudViewController.tableView];
-
-        [self setHudValue:nil forKey:@"scheme"];
-        [self setHudValue:nil forKey:@"host"];
-        [self setHudValue:nil forKey:@"path"];
-        [self setHudValue:nil forKey:@"ip"];
-        [self setHudValue:nil forKey:@"tcp-info"];
-        [self setHudValue:nil forKey:@"http"];
-        [self setHudValue:nil forKey:@"tcp-spd"];
-        [self setHudValue:nil forKey:@"t-prepared"];
-        [self setHudValue:nil forKey:@"t-render"];
-        [self setHudValue:nil forKey:@"t-preroll"];
-        [self setHudValue:nil forKey:@"t-http-open"];
-        [self setHudValue:nil forKey:@"t-http-seek"];
         
-        self.shouldShowHudView = options.showHudView;
+        // 关闭ijkply自带的渲染层
+        // init video sink
+//        _glView = [[IJKSDLGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//        _glView.isThirdGLView = NO;
+//        _view = _glView;
+//        _hudViewController = [[IJKSDLHudViewController alloc] init];
+//        [_hudViewController setRect:_glView.frame];
+//        _shouldShowHudView = NO;
+//        _hudViewController.tableView.hidden = YES;
+//        [_view addSubview:_hudViewController.tableView];
+//
+//        [self setHudValue:nil forKey:@"scheme"];
+//        [self setHudValue:nil forKey:@"host"];
+//        [self setHudValue:nil forKey:@"path"];
+//        [self setHudValue:nil forKey:@"ip"];
+//        [self setHudValue:nil forKey:@"tcp-info"];
+//        [self setHudValue:nil forKey:@"http"];
+//        [self setHudValue:nil forKey:@"tcp-spd"];
+//        [self setHudValue:nil forKey:@"t-prepared"];
+//        [self setHudValue:nil forKey:@"t-render"];
+//        [self setHudValue:nil forKey:@"t-preroll"];
+//        [self setHudValue:nil forKey:@"t-http-open"];
+//        [self setHudValue:nil forKey:@"t-http-seek"];
+//
+//        self.shouldShowHudView = options.showHudView;
+//
+//        ijkmp_ios_set_glview(_mediaPlayer, _glView);
+//        ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
+//#ifdef DEBUG
+//        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
+//#else
+//        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
+//#endif
+        
+        // 码流引流过来自己做处理
+        _mediaPlayer->ffplayer->vout->display_overlay = display_overlay;
+        _mediaPlayer->ffplayer->vout->opaque = (__bridge void *) self;
+        _mediaPlayer->ffplayer->vout->free_l = voutFreeL;
 
-        ijkmp_ios_set_glview(_mediaPlayer, _glView);
-        ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
-#ifdef DEBUG
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
-#else
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
-#endif
+        
+        // 硬解码处理
+//        if(self.isVideotoolbox){
+//            _mediaPlayer->ffplayer->videotoolbox = 1;
+//            _mediaPlayer->ffplayer->vtb_max_frame_width = 4*1024;
+//            //           av_dict_set_int(&tmp_opts, "probesize",         avf->probesize, 0);
+//        }
+
         // init audio sink
         [[IJKAudioKit sharedInstance] setupAudioSession];
 
@@ -260,108 +283,37 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
     return self;
 }
 
-- (id)initWithMoreContent:(NSURL *)aUrl
-              withOptions:(IJKFFOptions *)options
-               withGLView:(UIView<IJKSDLGLViewProtocol> *)glView
-{
-    if (aUrl == nil)
-        return nil;
-
-    // Detect if URL is file path and return proper string for it
-    NSString *aUrlString = [aUrl isFileURL] ? [aUrl path] : [aUrl absoluteString];
-
-    return [self initWithMoreContentString:aUrlString
-                              withOptions:options
-                               withGLView:glView];
-}
-
-- (id)initWithMoreContentString:(NSString *)aUrlString
-                 withOptions:(IJKFFOptions *)options
-                  withGLView:(UIView <IJKSDLGLViewProtocol> *)glView
-{
-    if (aUrlString == nil || glView == nil)
-        return nil;
-
-    self = [super init];
-    if (self) {
-        ijkmp_global_init();
-        ijkmp_global_set_inject_callback(ijkff_inject_callback);
-
-        [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:NO];
-
-        if (options == nil)
-            options = [IJKFFOptions optionsByDefault];
-
-        // IJKFFIOStatRegister(IJKFFIOStatDebugCallback);
-        // IJKFFIOStatCompleteRegister(IJKFFIOStatCompleteDebugCallback);
-
-        // init fields
-        _scalingMode = IJKMPMovieScalingModeAspectFit;
-        _shouldAutoplay = YES;
-        memset(&_asyncStat, 0, sizeof(_asyncStat));
-        memset(&_cacheStat, 0, sizeof(_cacheStat));
-        _monitor = [[IJKFFMonitor alloc] init];
-
-        // init media resource
-        _urlString = aUrlString;
-
-        // init player
-        _mediaPlayer = ijkmp_ios_create(media_player_msg_loop);
-        _msgPool = [[IJKFFMoviePlayerMessagePool alloc] init];
-        IJKWeakHolder *weakHolder = [IJKWeakHolder new];
-        weakHolder.object = self;
-
-        ijkmp_set_weak_thiz(_mediaPlayer, (__bridge_retained void *) self);
-        ijkmp_set_inject_opaque(_mediaPlayer, (__bridge_retained void *) weakHolder);
-        ijkmp_set_ijkio_inject_opaque(_mediaPlayer, (__bridge_retained void *)weakHolder);
-        ijkmp_set_option_int(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "start-on-prepared", _shouldAutoplay ? 1 : 0);
-
-        self.shouldShowHudView = options.showHudView;
-        glView.isThirdGLView = YES;
-        _view = _glView = (IJKSDLGLView *)glView;
-        _hudViewController = [[IJKSDLHudViewController alloc] init];
-        [_hudViewController setRect:_glView.frame];
-        _shouldShowHudView = NO;
-        _hudViewController.tableView.hidden = YES;
-        [_view addSubview:_hudViewController.tableView];
-
-        [self setHudValue:nil forKey:@"scheme"];
-        [self setHudValue:nil forKey:@"host"];
-        [self setHudValue:nil forKey:@"path"];
-        [self setHudValue:nil forKey:@"ip"];
-        [self setHudValue:nil forKey:@"tcp-info"];
-        [self setHudValue:nil forKey:@"http"];
-        [self setHudValue:nil forKey:@"tcp-spd"];
-        [self setHudValue:nil forKey:@"t-prepared"];
-        [self setHudValue:nil forKey:@"t-render"];
-        [self setHudValue:nil forKey:@"t-preroll"];
-        [self setHudValue:nil forKey:@"t-http-open"];
-        [self setHudValue:nil forKey:@"t-http-seek"];
-        self.shouldShowHudView = options.showHudView;
-
-        ijkmp_ios_set_glview(_mediaPlayer, _glView);
-
-        ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
-#ifdef DEBUG
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
-#else
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
-#endif
-        // init audio sink
-        [[IJKAudioKit sharedInstance] setupAudioSession];
-
-        [options applyTo:_mediaPlayer];
-        _pauseInBackground = NO;
-
-        // init extra
-        _keepScreenOnWhilePlaying = YES;
-        [self setScreenOn:YES];
-
-        _notificationManager = [[IJKNotificationManager alloc] init];
-        [self registerApplicationObservers];
+// 解码流处理
+int display_overlay(SDL_Vout *vout, SDL_VoutOverlay *overlay){
+    IJKFFMoviePlayerController* controller = (__bridge IJKFFMoviePlayerController *)vout->opaque;
+    if(controller.displayFrameBlock != nil){
+        controller.displayFrameBlock(overlay);
     }
-    return self;
+    return 0;
 }
+
+// 获取当前帧
+-(SDL_VoutOverlay*)getCurrentFrame3{
+    if (!_mediaPlayer)
+        return NULL;
+    
+    //    FrameQueue *f = &_mediaPlayer->ffplayer->is->pictq;
+    //    Frame *vp  = &f->queue[(f->rindex + f->rindex_shown) % f->max_size];
+    //    return vp->bmp;
+    FrameQueue *f = &_mediaPlayer->ffplayer->is->pictq;
+    //Frame *vp  = &f->queue[(f->rindex + f->rindex_shown + 1) % f->max_size];
+    Frame *vp = &f->queue[(f->rindex) % f->max_size];
+    return vp->bmp;
+}
+
+// 界面释放
+void voutFreeL(SDL_Vout *vout) {
+    if(vout != NULL) {
+        vout->opaque = NULL;
+        free(vout);
+    }
+}
+
 
 - (void)dealloc
 {
@@ -1558,8 +1510,8 @@ static int onInjectOnHttpEvent(IJKFFMoviePlayerController *mpc, int type, void *
 // NOTE: could be called from multiple thread
 static int ijkff_inject_callback(void *opaque, int message, void *data, size_t data_size)
 {
-    IJKWeakHolder *weakHolder = (__bridge IJKWeakHolder*)opaque;
-    IJKFFMoviePlayerController *mpc = weakHolder.object;
+//    IJKWeakHolder *weakHolder = (__bridge IJKWeakHolder*)opaque;
+    IJKFFMoviePlayerController *mpc = (__bridge IJKFFMoviePlayerController*)opaque;
     if (!mpc)
         return 0;
 

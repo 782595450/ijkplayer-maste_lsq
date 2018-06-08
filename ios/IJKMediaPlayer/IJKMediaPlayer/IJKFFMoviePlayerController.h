@@ -24,7 +24,9 @@
 #import "IJKMediaPlayback.h"
 #import "IJKFFMonitor.h"
 #import "IJKFFOptions.h"
-#import "IJKSDLGLViewProtocol.h"
+//#import "IJKSDLGLViewProtocol.h"
+//#include "ijksdl/ijksdl.h"
+#include "ijksdl.h"
 
 // media meta
 #define k_IJKM_KEY_FORMAT         @"format"
@@ -70,6 +72,8 @@ typedef enum IJKLogLevel {
     k_IJK_LOG_SILENT  = 8,
 } IJKLogLevel;
 
+typedef void (^DisplayFrameBlock)(SDL_VoutOverlay *overlay);
+
 @interface IJKFFMoviePlayerController : NSObject <IJKMediaPlayback>
 
 - (id)initWithContentURL:(NSURL *)aUrl
@@ -78,13 +82,18 @@ typedef enum IJKLogLevel {
 - (id)initWithContentURLString:(NSString *)aUrlString
                    withOptions:(IJKFFOptions *)options;
 
-- (id)initWithMoreContent:(NSURL *)aUrl
-             withOptions:(IJKFFOptions *)options
-              withGLView:(UIView<IJKSDLGLViewProtocol> *)glView;
+//- (id)initWithMoreContent:(NSURL *)aUrl
+//             withOptions:(IJKFFOptions *)options
+//              withGLView:(UIView<IJKSDLGLViewProtocol> *)glView;
 
-- (id)initWithMoreContentString:(NSString *)aUrlString
-                 withOptions:(IJKFFOptions *)options
-                  withGLView:(UIView<IJKSDLGLViewProtocol> *)glView;
+//- (id)initWithMoreContentString:(NSString *)aUrlString
+//                 withOptions:(IJKFFOptions *)options
+//                  withGLView:(UIView<IJKSDLGLViewProtocol> *)glView;
+
+// 特殊处理
+@property(nonatomic,assign) Boolean isVideotoolbox;
+@property(nonatomic) DisplayFrameBlock displayFrameBlock;
+- (SDL_VoutOverlay*)getCurrentFrame3;
 
 - (void)prepareToPlay;
 - (void)play;

@@ -20,6 +20,15 @@
 		55E809F31B146DE8003E98A5 /* IJKQRCodeScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55E809F21B146DE8003E98A5 /* IJKQRCodeScanViewController.xib */; };
 		55E809F61B1480BC003E98A5 /* IJKDemoHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E809F51B1480BC003E98A5 /* IJKDemoHistory.m */; };
 		55E809F91B15A1DB003E98A5 /* IJKDemoLocalFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E809F81B15A1DB003E98A5 /* IJKDemoLocalFolderViewController.m */; };
+		942CC96220CA2C79003331F7 /* LSPlayerMovieDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 942CC96020CA2C78003331F7 /* LSPlayerMovieDecoder.m */; };
+		942CC96820CA2F88003331F7 /* YUVDisplayGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942CC96720CA2F88003331F7 /* YUVDisplayGLViewController.m */; };
+		942CC96A20CA3031003331F7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942CC96920CA3031003331F7 /* GLKit.framework */; };
+		942CC96D20CA43ED003331F7 /* OpenGLView20.m in Sources */ = {isa = PBXBuildFile; fileRef = 942CC96B20CA43EC003331F7 /* OpenGLView20.m */; };
+		942CC97120CA6AA1003331F7 /* IMG_4075.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = 942CC97020CA6AA0003331F7 /* IMG_4075.MP4 */; };
+		942CC97420CA6BAC003331F7 /* WFViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 942CC97220CA6BAC003331F7 /* WFViewController.mm */; };
+		942CC97720CA6CE4003331F7 /* AVFrameData.m in Sources */ = {isa = PBXBuildFile; fileRef = 942CC97620CA6CE3003331F7 /* AVFrameData.m */; };
+		942CC98C20CA71BF003331F7 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 942CC98A20CA71BF003331F7 /* Shader.vsh */; };
+		942CC98D20CA71BF003331F7 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 942CC98B20CA71BF003331F7 /* Shader.fsh */; };
 		E60E8C2A19EF70BB005B5B6E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E60E8C2919EF70BB005B5B6E /* CoreMedia.framework */; };
 		E612EAE517F7E0F800BEE660 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E612EAE417F7E0F800BEE660 /* MediaPlayer.framework */; };
 		E6166C9C17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch in Resources */ = {isa = PBXBuildFile; fileRef = E6166C9B17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch */; };
@@ -100,6 +109,20 @@
 		55E809F51B1480BC003E98A5 /* IJKDemoHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IJKDemoHistory.m; sourceTree = "<group>"; };
 		55E809F71B15A1DB003E98A5 /* IJKDemoLocalFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJKDemoLocalFolderViewController.h; sourceTree = "<group>"; };
 		55E809F81B15A1DB003E98A5 /* IJKDemoLocalFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IJKDemoLocalFolderViewController.m; sourceTree = "<group>"; };
+		942CC96020CA2C78003331F7 /* LSPlayerMovieDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPlayerMovieDecoder.m; sourceTree = "<group>"; };
+		942CC96120CA2C79003331F7 /* LSPlayerMovieDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSPlayerMovieDecoder.h; sourceTree = "<group>"; };
+		942CC96620CA2F88003331F7 /* YUVDisplayGLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUVDisplayGLViewController.h; sourceTree = "<group>"; };
+		942CC96720CA2F88003331F7 /* YUVDisplayGLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUVDisplayGLViewController.m; sourceTree = "<group>"; };
+		942CC96920CA3031003331F7 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		942CC96B20CA43EC003331F7 /* OpenGLView20.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLView20.m; sourceTree = "<group>"; };
+		942CC96C20CA43ED003331F7 /* OpenGLView20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView20.h; sourceTree = "<group>"; };
+		942CC97020CA6AA0003331F7 /* IMG_4075.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = IMG_4075.MP4; sourceTree = "<group>"; };
+		942CC97220CA6BAC003331F7 /* WFViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WFViewController.mm; sourceTree = "<group>"; };
+		942CC97320CA6BAC003331F7 /* WFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFViewController.h; sourceTree = "<group>"; };
+		942CC97520CA6CE3003331F7 /* AVFrameData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFrameData.h; sourceTree = "<group>"; };
+		942CC97620CA6CE3003331F7 /* AVFrameData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFrameData.m; sourceTree = "<group>"; };
+		942CC98A20CA71BF003331F7 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		942CC98B20CA71BF003331F7 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		E60E8C2919EF70BB005B5B6E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		E612EAE417F7E0F800BEE660 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		E6166C9B17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IJKMediaDemo-Prefix.pch"; sourceTree = "<group>"; };
@@ -141,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				942CC96A20CA3031003331F7 /* GLKit.framework in Frameworks */,
 				546736C41E2371AE00FEE0DF /* libstdc++.tbd in Frameworks */,
 				E63FC29117F04C83003551EB /* AudioToolbox.framework in Frameworks */,
 				E61B45AE19EF7021002792EC /* AVFoundation.framework in Frameworks */,
@@ -162,6 +186,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		942CC95C20CA2C2C003331F7 /* LSQMediaManager */ = {
+			isa = PBXGroup;
+			children = (
+				942CC98B20CA71BF003331F7 /* Shader.fsh */,
+				942CC98A20CA71BF003331F7 /* Shader.vsh */,
+				942CC97320CA6BAC003331F7 /* WFViewController.h */,
+				942CC97220CA6BAC003331F7 /* WFViewController.mm */,
+				942CC96C20CA43ED003331F7 /* OpenGLView20.h */,
+				942CC96B20CA43EC003331F7 /* OpenGLView20.m */,
+				942CC96620CA2F88003331F7 /* YUVDisplayGLViewController.h */,
+				942CC96720CA2F88003331F7 /* YUVDisplayGLViewController.m */,
+				942CC96120CA2C79003331F7 /* LSPlayerMovieDecoder.h */,
+				942CC96020CA2C78003331F7 /* LSPlayerMovieDecoder.m */,
+				942CC97520CA6CE3003331F7 /* AVFrameData.h */,
+				942CC97620CA6CE3003331F7 /* AVFrameData.m */,
+			);
+			name = LSQMediaManager;
+			path = ../../IJKMediaPlayer/LSQMediaManager;
+			sourceTree = "<group>";
+		};
 		E63FC27717F032D9003551EB /* Misc */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +250,7 @@
 		E6903EFE17EAF70200CFD954 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				942CC96920CA3031003331F7 /* GLKit.framework */,
 				546736C31E2371AE00FEE0DF /* libstdc++.tbd */,
 				E63FC28F17F04C83003551EB /* AudioToolbox.framework */,
 				E61B45AD19EF7021002792EC /* AVFoundation.framework */,
@@ -227,6 +272,7 @@
 		E6903F0517EAF70200CFD954 /* IJKMediaDemo */ = {
 			isa = PBXGroup;
 			children = (
+				942CC95C20CA2C2C003331F7 /* LSQMediaManager */,
 				E6903F0E17EAF70200CFD954 /* IJKAppDelegate.h */,
 				E6903F0F17EAF70200CFD954 /* IJKAppDelegate.m */,
 				E6A9B55C17EDA6AC00A1A500 /* View Controllers */,
@@ -239,6 +285,7 @@
 		E6903F0617EAF70200CFD954 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				942CC97020CA6AA0003331F7 /* IMG_4075.MP4 */,
 				E6903F0717EAF70200CFD954 /* IJKMediaDemo-Info.plist */,
 				E6903F0817EAF70200CFD954 /* InfoPlist.strings */,
 				E6903F0B17EAF70200CFD954 /* main.m */,
@@ -375,12 +422,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				942CC98C20CA71BF003331F7 /* Shader.vsh in Resources */,
 				E6903F0A17EAF70200CFD954 /* InfoPlist.strings in Resources */,
 				E67323AC1B69E76100CB9036 /* MoviePlayerImages.xcassets in Resources */,
 				E6903F1217EAF70200CFD954 /* Default.png in Resources */,
+				942CC97120CA6AA1003331F7 /* IMG_4075.MP4 in Resources */,
 				E6903F1417EAF70200CFD954 /* Default@2x.png in Resources */,
 				E6903F1617EAF70200CFD954 /* Default-568h@2x.png in Resources */,
 				E67323A71B69E6F800CB9036 /* AppIcons.xcassets in Resources */,
+				942CC98D20CA71BF003331F7 /* Shader.fsh in Resources */,
 				E6166C9C17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch in Resources */,
 				E6A9B56517EDA72C00A1A500 /* IJKMoviePlayerViewController.xib in Resources */,
 				E6F524EC1B183A0700B69DC7 /* IJKDemoSampleViewController.xib in Resources */,
@@ -400,8 +450,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				55E809F91B15A1DB003E98A5 /* IJKDemoLocalFolderViewController.m in Sources */,
+				942CC97420CA6BAC003331F7 /* WFViewController.mm in Sources */,
 				55E809F61B1480BC003E98A5 /* IJKDemoHistory.m in Sources */,
 				E6903F0C17EAF70200CFD954 /* main.m in Sources */,
+				942CC97720CA6CE4003331F7 /* AVFrameData.m in Sources */,
+				942CC96820CA2F88003331F7 /* YUVDisplayGLViewController.m in Sources */,
+				942CC96220CA2C79003331F7 /* LSPlayerMovieDecoder.m in Sources */,
 				55E809E21B143C47003E98A5 /* IJKDemoMainViewController.m in Sources */,
 				E6903F1017EAF70200CFD954 /* IJKAppDelegate.m in Sources */,
 				E6F524EB1B183A0700B69DC7 /* IJKDemoSampleViewController.m in Sources */,
@@ -410,6 +464,7 @@
 				E66F8DCB17EEDD8B00354D80 /* IJKMediaControl.m in Sources */,
 				55E809EA1B145BC2003E98A5 /* IJKDemoInputURLViewController.m in Sources */,
 				55E809EE1B146C1E003E98A5 /* IJKQRCodeScanViewController.m in Sources */,
+				942CC96D20CA43ED003331F7 /* OpenGLView20.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,8 +557,18 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = A4LWFHDJZJ;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IJKMediaDemo/IJKMediaDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					../../ijkmedia/ijksdl,
+					../../ijkmedia/ijksdl/ijkplayer,
+					../IJKMediaPlayer/IJKMediaPlayer/ijkmedia,
+					../../ijkmedia,
+					../IJKMediaPlayer/IJKMediaPlayer/ijkmedia/ijksdl/ios,
+					../build/universal/include,
+					../../ijkmedia/ijksdl/ffmpeg,
+				);
 				INFOPLIST_FILE = "IJKMediaDemo/IJKMediaDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -523,8 +588,18 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = A4LWFHDJZJ;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IJKMediaDemo/IJKMediaDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					../../ijkmedia/ijksdl,
+					../../ijkmedia/ijksdl/ijkplayer,
+					../IJKMediaPlayer/IJKMediaPlayer/ijkmedia,
+					../../ijkmedia,
+					../IJKMediaPlayer/IJKMediaPlayer/ijkmedia/ijksdl/ios,
+					../build/universal/include,
+					../../ijkmedia/ijksdl/ffmpeg,
+				);
 				INFOPLIST_FILE = "IJKMediaDemo/IJKMediaDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
