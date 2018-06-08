@@ -13,6 +13,7 @@
 #import <OpenGLES/EAGL.h>
 #include <sys/time.h>
 #include <pthread.h>
+#import "AVFrameData.h"
 
 @interface YUVModel : NSObject
 
@@ -76,7 +77,7 @@
 }
 #pragma mark - 接口
 - (void)displayYUV420pData:(NSArray *)data SelectIndex:(int)index IsFull:(BOOL)isFull Type:(int)type;
-- (void)displayYUV420pData:(void *)data width:(GLint)w height:(GLint)h;
+- (void)displayYUV420pData:(AVFrameData *)data width:(GLint)w height:(GLint)h;
 - (void)setVideoSize:(GLuint)width height:(GLuint)height;
 
 // 4分格渲染

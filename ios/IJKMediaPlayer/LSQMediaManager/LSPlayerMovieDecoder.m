@@ -44,7 +44,7 @@
     //  [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_INFO];
     
     IJKFFOptions *options =  [[IJKFFOptions alloc] init];
-    [options setPlayerOptionIntValue:0 forKey:@"packet-buffering"];
+//    [options setPlayerOptionIntValue:0 forKey:@"packet-buffering"];
 //    [options setPlayerOptionIntValue:30  forKey:@"max-fps"];
 //    [options setPlayerOptionIntValue:1  forKey:@"framedrop"];
 //    [options setPlayerOptionIntValue:0  forKey:@"start-on-prepared"];
@@ -68,7 +68,7 @@
 //    [options setPlayerOptionIntValue:29.97 forKey:@"r"];
 //    // -vol——设置音量大小，256为标准音量。（要设置成两倍音量时则输入512，依此类推
 //    [options setPlayerOptionIntValue:512 forKey:@"vol"];
-
+    [options setPlayerOptionValue:@"fcc-_es2" forKey:@"overlay-format"];
     //disable audio
     //[options setPlayerOptionIntValue:1 forKey:@"an"];
     

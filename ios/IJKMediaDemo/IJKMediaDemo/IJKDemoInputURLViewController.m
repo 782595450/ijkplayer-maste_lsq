@@ -95,11 +95,14 @@
 
     AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
 //    [_panoplayer WriteYUVFrame:frameData];
-    [_panoplayer displayYUV420pData:frame->pixels[0] width:frame->w height:frame->h];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
+    });
+    
 }
 
 
--(AVFrameData *) createFrameData: (SDL_VoutOverlay*) frame
+- (AVFrameData *) createFrameData: (SDL_VoutOverlay*) frame
                      trimPadding: (BOOL) trim{
 
     AVFrameData *frameData = [[AVFrameData alloc] init];

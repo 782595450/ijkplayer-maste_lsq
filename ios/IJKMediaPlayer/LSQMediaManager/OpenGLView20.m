@@ -9,20 +9,6 @@
 
 #import "OpenGLView20.h"
 //#import "CStreamItem.h"
-@implementation YUVModel
-- (id)copyWithZone:(NSZone *)zone {
-    
-    YUVModel *yuv = [[[self class] allocWithZone:zone] init];
-    yuv.yuvData = self.yuvData;
-    yuv.width = self.width;
-    yuv.height = self.height;
-    yuv.camId = self.camId;
-    yuv.listIndex = self.listIndex;
-    return yuv;
-}
-
-@end
-
 
 enum AttribEnum
 {
@@ -465,7 +451,7 @@ void main(void)\
 }
 
 #pragma mark - 接口
-- (void)displayYUV420pData:(void *)data width:(GLint)w height:(GLint)h;
+- (void)displayYUV420pData:(AVFrameData *)data width:(GLint)w height:(GLint)h;
 {
     //_pYuvData = data;
     //    MyLog(@"width:%d, height:%d", w, h);
@@ -482,17 +468,17 @@ void main(void)\
         [EAGLContext setCurrentContext:_glContext];
         
         glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RED_EXT, GL_UNSIGNED_BYTE, data);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RED_EXT, GL_UNSIGNED_BYTE, data.data0);
         
         //[self debugGlError];
         
         glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w/2, h/2, GL_RED_EXT, GL_UNSIGNED_BYTE, data + w * h);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w/2, h/2, GL_RED_EXT, GL_UNSIGNED_BYTE, data.data1);
         
         // [self debugGlError];
         
         glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w/2, h/2, GL_RED_EXT, GL_UNSIGNED_BYTE, data + w * h * 5 / 4);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w/2, h/2, GL_RED_EXT, GL_UNSIGNED_BYTE, data.data2);
         
         //[self debugGlError];
         
