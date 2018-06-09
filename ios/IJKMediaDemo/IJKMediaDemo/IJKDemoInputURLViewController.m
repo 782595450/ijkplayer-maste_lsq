@@ -18,6 +18,8 @@
 #import "IJKMoviePlayerViewController.h"
 #import "LSPlayerMovieDecoder.h"
 #import "OpenGLView20.h"
+#define LSScreenWidth  [UIScreen mainScreen].bounds.size.width
+#define LSScreenHeight [UIScreen mainScreen].bounds.size.height
 
 @interface IJKDemoInputURLViewController () <UITextViewDelegate,MovieDecoderDelegate>{
     LSPlayerMovieDecoder* decoder;
@@ -57,7 +59,7 @@
     [super viewDidLoad];
     _panoplayer = [[OpenGLView20 alloc] init];
     _panoplayer.backgroundColor = [UIColor blueColor];
-    _panoplayer.frame = self.view.frame;
+    _panoplayer.frame = CGRectMake(0, 44, LSScreenWidth, LSScreenHeight);
 //    NSLog(@" frame size %f,%f",_panoplayer.frame.size.width,_panoplayer.frame.size.height);
     [self.view addSubview:_panoplayer];
 
@@ -69,18 +71,22 @@
 //    path = @"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear0/prog_index.m3u8";
 //    path = @"http://media.detu.com/@/17717910-8057-4FDF-2F33-F8B1F68282395/2016-08-22/57baeda5920ea-similar.mp4";
 //    path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
-    path =  [[NSBundle mainBundle] pathForResource:@"IMG_4075" ofType:@"MP4"];
+//    path =  [[NSBundle mainBundle] pathForResource:@"IMG_4075" ofType:@"MP4"];
+    path = @"http://storage.yeelens.com/vod/video_audio/vod.m3u8";
     
     decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
     decoder.delegate = self;
+    
 }
 
 -(void)movieDecoderDidFinishDecoding{
     
 }
+
 -(void)movieDecoderDidSeeked{
     
 }
+
 -(void)movieDecoderError:(NSError *)error;{
     
 }

@@ -112,6 +112,8 @@ static const char *kIJKFFRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001
 
 #define FFP_IO_STAT_STEP (50 * 1024)
 
+static id object;
+
 // as an example
 void IJKFFIOStatDebugCallback(const char *url, int type, int bytes)
 {
@@ -196,9 +198,6 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         if (options == nil)
             options = [IJKFFOptions optionsByDefault];
 
-        // IJKFFIOStatRegister(IJKFFIOStatDebugCallback);
-        // IJKFFIOStatCompleteRegister(IJKFFIOStatCompleteDebugCallback);
-
         // init fields
         _scalingMode = IJKMPMovieScalingModeAspectFit;
         _shouldAutoplay = YES;
@@ -212,47 +211,14 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         // init player
         _mediaPlayer = ijkmp_ios_create(media_player_msg_loop);
         _msgPool = [[IJKFFMoviePlayerMessagePool alloc] init];
-//        IJKWeakHolder *weakHolder = [IJKWeakHolder new];
-//        weakHolder.object = self;
-
+        
         ijkmp_set_weak_thiz(_mediaPlayer, (__bridge_retained void *) self);
         ijkmp_set_inject_opaque(_mediaPlayer, (__bridge_retained void *) self);
         ijkmp_set_option_int(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "start-on-prepared", _shouldAutoplay ? 1 : 0);
-
-        
+//        ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
+        object = self;
         // 关闭ijkply自带的渲染层
         // init video sink
-//        _glView = [[IJKSDLGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//        _glView.isThirdGLView = NO;
-//        _view = _glView;
-//        _hudViewController = [[IJKSDLHudViewController alloc] init];
-//        [_hudViewController setRect:_glView.frame];
-//        _shouldShowHudView = NO;
-//        _hudViewController.tableView.hidden = YES;
-//        [_view addSubview:_hudViewController.tableView];
-//
-//        [self setHudValue:nil forKey:@"scheme"];
-//        [self setHudValue:nil forKey:@"host"];
-//        [self setHudValue:nil forKey:@"path"];
-//        [self setHudValue:nil forKey:@"ip"];
-//        [self setHudValue:nil forKey:@"tcp-info"];
-//        [self setHudValue:nil forKey:@"http"];
-//        [self setHudValue:nil forKey:@"tcp-spd"];
-//        [self setHudValue:nil forKey:@"t-prepared"];
-//        [self setHudValue:nil forKey:@"t-render"];
-//        [self setHudValue:nil forKey:@"t-preroll"];
-//        [self setHudValue:nil forKey:@"t-http-open"];
-//        [self setHudValue:nil forKey:@"t-http-seek"];
-//
-//        self.shouldShowHudView = options.showHudView;
-//
-//        ijkmp_ios_set_glview(_mediaPlayer, _glView);
-//        ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
-//#ifdef DEBUG
-//        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
-//#else
-//        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
-//#endif
         
         // 码流引流过来自己做处理
         _mediaPlayer->ffplayer->vout->display_overlay = display_overlay;
@@ -281,16 +247,27 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         [self registerApplicationObservers];
     }
     return self;
+    
 }
 
 // 解码流处理
 int display_overlay(SDL_Vout *vout, SDL_VoutOverlay *overlay){
-    IJKFFMoviePlayerController* controller = (__bridge IJKFFMoviePlayerController *)vout->opaque;
-    if(controller.displayFrameBlock != nil){
-        controller.displayFrameBlock(overlay);
-    }
+//    IJKFFMoviePlayerController* controller = (__bridge IJKFFMoviePlayerController *)vout->opaque;
+//    if(self.displayFrameBlock){
+//        self.displayFrameBlock(overlay);
+//    }
+    [object getOverlay:overlay];
     return 0;
+    
 }
+
+- (void)getOverlay:(SDL_VoutOverlay *)overlay{
+    if(self.displayFrameBlock){
+        self.displayFrameBlock(overlay);
+    }
+}
+
+
 
 // 获取当前帧
 -(SDL_VoutOverlay*)getCurrentFrame3{

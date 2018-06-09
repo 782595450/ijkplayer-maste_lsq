@@ -3513,6 +3513,7 @@ static int read_thread(void *arg)
         }
         pkt->flags = 0;
         ret = av_read_frame(ic, pkt);
+
         if (ret < 0) {
             int pb_eof = 0;
             int pb_error = 0;
@@ -3596,7 +3597,6 @@ static int read_thread(void *arg)
         } else {
             av_packet_unref(pkt);
         }
-
         ffp_statistic_l(ffp);
 
         if (ffp->ijkmeta_delay_init && !init_ijkmeta &&
