@@ -80,6 +80,8 @@
 - (void)displayYUV420pData:(AVFrameData *)data width:(GLint)w height:(GLint)h;
 - (void)setVideoSize:(GLuint)width height:(GLuint)height;
 
+- (void)displayYUV420pDatas:(void *)data width:(GLint)w height:(GLint)h;
+
 // 4分格渲染
 - (void)displayYUV420p4MultilatticeData:(NSArray *)data SelectIndex:(int)index isFull:(BOOL)isFull;
 // 8分格渲染

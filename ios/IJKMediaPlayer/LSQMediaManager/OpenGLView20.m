@@ -449,6 +449,42 @@ void main(void)\
     // Draw
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
+#pragma mark - 接口
+- (void)displayYUV420pDatas:(void *)data width:(GLint)w height:(GLint)h;
+{
+    //_pYuvData = data;
+    //    MyLog(@"width:%d, height:%d", w, h);
+    if (!self.window)
+    {
+        return;
+    }
+    @synchronized(self)
+    {
+        if (w != _videoW || h != _videoH)
+        {
+            [self setVideoSize:w height:h];
+        }
+        [EAGLContext setCurrentContext:_glContext];
+        
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RED_EXT, GL_UNSIGNED_BYTE, data);
+        
+        //[self debugGlError];
+        
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w/2, h/2, GL_RED_EXT, GL_UNSIGNED_BYTE, data + w * h);
+        
+        // [self debugGlError];
+        
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w/2, h/2, GL_RED_EXT, GL_UNSIGNED_BYTE, data + w * h * 5 / 4);
+        
+        //[self debugGlError];
+        
+        [self render];
+    }
+    
+}
 
 #pragma mark - 接口
 - (void)displayYUV420pData:(AVFrameData *)data width:(GLint)w height:(GLint)h;

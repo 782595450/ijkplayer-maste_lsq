@@ -27,7 +27,7 @@
     LSPlayerMovieDecoder* decoder;
     OpenGLView20 *_panoplayer;
     unsigned char* m_pBuffer;
-
+    LSSphere *sphere;
 }
 
 @property(nonatomic,strong) IBOutlet UITextView *textView;
@@ -65,9 +65,7 @@
 //    NSLog(@" frame size %f,%f",_panoplayer.frame.size.width,_panoplayer.frame.size.height);
     [self.view addSubview:_panoplayer];
 
-    LSSphere *sphere = [LSSphere new];
-    [sphere change];
-    
+    sphere = [LSSphere new];
     
 }
 
@@ -76,8 +74,8 @@
 
 //    path = @"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear0/prog_index.m3u8";
 //    path = @"http://media.detu.com/@/17717910-8057-4FDF-2F33-F8B1F68282395/2016-08-22/57baeda5920ea-similar.mp4";
-//    path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
-    path =  [[NSBundle mainBundle] pathForResource:@"IMG_4075" ofType:@"MP4"];
+    path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
+//    path =  [[NSBundle mainBundle] pathForResource:@"1123" ofType:@"png"];
 //    path = @"http://storage.yeelens.com/vod/video_audio/vod.m3u8";
     
     decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
@@ -103,8 +101,8 @@
 -(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame;{
 
     AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
-//    [_panoplayer WriteYUVFrame:frameData];
     dispatch_async(dispatch_get_main_queue(), ^{
+//        [_panoplayer displayYUV420pDatas:[sphere change:frame->pixels[0]] width:frame->w height:frame->h];
         [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
     });
     

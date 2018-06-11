@@ -40,13 +40,13 @@ int GetRadius(int i_ExpandWidth,int i_ExpandHeight){
     return i_ExpandHeight ;
 }
 
-//- (CGPoint)findPoint:(double)dw_Angle ofRandius:(double)i_Radius{
-//    double x,y;
-//    i_Radius += inner_Radius;
-//    x = i_Radius * cos(dw_Angle) + x_dot;
-//    y = i_Radius * sin(dw_Angle) + y_dot;
-//    return CGPointMake(x, y);
-//}
+- (CGPoint)ocfindPoint:(double)dw_Angle ofRandius:(double)i_Radius{
+    double x,y;
+    i_Radius += inner_Radius;
+    x = i_Radius * cos(dw_Angle) + x_dot;
+    y = i_Radius * sin(dw_Angle) + y_dot;
+    return CGPointMake(x, y);
+}
 
 CvPoint FindPoint(double dw_Angle,int i_Radius)
 {
@@ -60,7 +60,8 @@ CvPoint FindPoint(double dw_Angle,int i_Radius)
 }
 
 //- (unsigned char *)getRGB:(int)x pointy:(int)y data:(unsigned char*)framedata{
-//    unsigned char *rgbData = malloc(x*y);
+//    unsigned char *rgbData = &(framedata+x*y)[x*3];
+//    return rgbData;
 //
 //}
 
@@ -71,7 +72,7 @@ uchar* GetRGB(int x,int y,IplImage* src)
 }
 
 
-- (void)change{
+- (char *)change:(unsigned char *)data{
     int i,j;
     double dw_Angle;
     int i_Radius;
@@ -95,9 +96,11 @@ uchar* GetRGB(int x,int y,IplImage* src)
             ((uchar*)(dst->imageData + dst->widthStep * j))[i * 3] = temp_src[0];
             ((uchar*)(dst->imageData + dst->widthStep * j))[i * 3 + 1] = temp_src[1];
             ((uchar*)(dst->imageData + dst->widthStep * j))[i * 3 + 2] = temp_src[2];
+            
         }
+
     }
-    
+    return dst->imageData;
     
 //    cvSaveImage("dst.bmp", dst);
 //    cvNamedWindow( "Image src view", 1 );

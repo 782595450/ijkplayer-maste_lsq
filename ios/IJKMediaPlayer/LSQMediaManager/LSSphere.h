@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface LSSphere : NSObject
-- (void)change;
+- (char *)change:(unsigned char *)data;
 @end
