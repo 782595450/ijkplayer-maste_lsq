@@ -20,6 +20,7 @@
 #import "OpenGLView20.h"
 #import "LSSphere.h"
 #import "opencv_ios.h"
+#import "LSMP4EncoderManager.h"
 #define LSScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define LSScreenHeight [UIScreen mainScreen].bounds.size.height
 
@@ -31,6 +32,7 @@
     LSSphere *sphere;
     UIImageView *openvcImageView;
     opencv_ios *opencvhandle;
+    LSMP4EncoderManager *encoderManager;
 }
 
 @property(nonatomic,strong) IBOutlet UITextView *textView;
@@ -67,6 +69,8 @@
 //    [self openvc];
     
     [self openglplay];
+    
+    
 }
 
 - (void)openglplay{
@@ -80,8 +84,8 @@
 
 - (void)sphere{
     // 全景测试
-    //    sphere = [LSSphere new];
-    //    [sphere change:nil];
+    sphere = [LSSphere new];
+    [sphere change:nil];
 }
 
 - (void)openvc{
@@ -99,8 +103,8 @@
 
 //    path = @"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear0/prog_index.m3u8";
 //    path = @"http://media.detu.com/@/17717910-8057-4FDF-2F33-F8B1F68282395/2016-08-22/57baeda5920ea-similar.mp4";
-    path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
-//    path =  [[NSBundle mainBundle] pathForResource:@"planet" ofType:@"jpg"];
+//    path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
+    path =  [[NSBundle mainBundle] pathForResource:@"184901AA" ofType:@"mp4"];
 //    path = @"http://storage.yeelens.com/vod/video_audio/vod.m3u8";
     
     decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
@@ -126,24 +130,39 @@
 -(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame;{
 
     AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
-    unsigned char *pBGR24 = malloc(frame->w*frame->h*3);
-    
-    YV12ToBGR24_Native(frameData.data0, frameData.data0, frameData.data0, pBGR24, frame->w, frame->h);
+//    unsigned char *pBGR24 = malloc(frame->w*frame->h*3);
+//    YV12ToBGR24_Native(frameData.data0, frameData.data0, frameData.data0, pBGR24, frame->w, frame->h);
     
     dispatch_async(dispatch_get_main_queue(), ^{
-//        openvcImageView.image = [opencvhandle imageCanny:pBGR24 width:frame->w heigth:frame->h];
+//        openvcImageView.image = [opencvhandle element:pBGR24 width:frame->w heigth:frame->h];
 //        [_panoplayer displayYUV420pDatas:[sphere change:frame->pixels[0]] width:frame->w height:frame->h];
         [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
-        free(pBGR24);
+//        free(pBGR24);
+        
+        // 录制视频 有bug
+//        if (!encoderManager) {
+//            encoderManager = [[LSMP4EncoderManager alloc] init];
+//            encoderManager.width = frame->w;
+//            encoderManager.heigth = frame->h;
+//            [encoderManager createMP4File:nil];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [encoderManager closeMP4File];
+//            });
+//        }
+//        [encoderManager writeH264Data:frame->sourcePacket->data size:frame->sourcePacket->size];
+        
     });
     
 }
 
+- (void)recordMp4{
+    
+}
 bool YV12ToBGR24_Native(unsigned char* pY,unsigned char* pU,unsigned char* pV,unsigned char* pBGR24,int width,int height)
 {
     if (width < 1 || height < 1 || pY == NULL || pBGR24 == NULL)
         return false;
-    const long len = width * height;
+//    const long len = width * height;
 //    unsigned char* yData = pYUV;
 //    unsigned char* vData = &yData[len];
 //    unsigned char* uData = &vData[len >> 2];

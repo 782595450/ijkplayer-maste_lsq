@@ -157,12 +157,12 @@ static int func_unlock(SDL_VoutOverlay *overlay)
     return SDL_UnlockMutex(opaque->mutex);
 }
 
-static int func_fill_frame(SDL_VoutOverlay *overlay, const AVFrame *frame)
+static int func_fill_frame(SDL_VoutOverlay *overlay, const AVFrame *frame,AVPacket *sourcePacket)
 {
     assert(overlay);
     SDL_VoutOverlay_Opaque *opaque = overlay->opaque;
     AVFrame swscale_dst_pic = { { 0 } };
-
+    overlay->sourcePacket = sourcePacket;
     av_frame_unref(opaque->linked_frame);
 
     int need_swap_uv = 0;

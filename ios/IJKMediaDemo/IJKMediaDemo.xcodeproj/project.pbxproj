@@ -30,6 +30,10 @@
 		942CC9A220CB888A003331F7 /* 1123.png in Resources */ = {isa = PBXBuildFile; fileRef = 942CC9A120CB888A003331F7 /* 1123.png */; };
 		942CC9A620CE12B7003331F7 /* planet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 942CC9A520CE12B7003331F7 /* planet.jpg */; };
 		942CC9EF20CF62A4003331F7 /* opencv_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 942CC9EE20CF62A4003331F7 /* opencv_ios.mm */; };
+		942CCA3520CF762E003331F7 /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 942CCA3420CF762E003331F7 /* libmp4v2.a */; };
+		942CCA3820CF77E9003331F7 /* MP4Encoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 942CCA3720CF77E9003331F7 /* MP4Encoder.mm */; };
+		942CCA3B20CF9FAC003331F7 /* LSMP4EncoderManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 942CCA3A20CF9FAC003331F7 /* LSMP4EncoderManager.mm */; };
+		942CCA3D20CFBAAD003331F7 /* 184901AA.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 942CCA3C20CFBAAD003331F7 /* 184901AA.mp4 */; };
 		E60E8C2A19EF70BB005B5B6E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E60E8C2919EF70BB005B5B6E /* CoreMedia.framework */; };
 		E612EAE517F7E0F800BEE660 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E612EAE417F7E0F800BEE660 /* MediaPlayer.framework */; };
 		E6166C9C17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch in Resources */ = {isa = PBXBuildFile; fileRef = E6166C9B17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch */; };
@@ -125,6 +129,26 @@
 		942CC9A520CE12B7003331F7 /* planet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet.jpg; sourceTree = "<group>"; };
 		942CC9ED20CF62A4003331F7 /* opencv_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opencv_ios.h; sourceTree = "<group>"; };
 		942CC9EE20CF62A4003331F7 /* opencv_ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = opencv_ios.mm; sourceTree = "<group>"; };
+		942CCA2520CF762E003331F7 /* streaming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = streaming.h; sourceTree = "<group>"; };
+		942CCA2620CF762E003331F7 /* chapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chapter.h; sourceTree = "<group>"; };
+		942CCA2720CF762E003331F7 /* file_prop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_prop.h; sourceTree = "<group>"; };
+		942CCA2820CF762E003331F7 /* general.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = general.h; sourceTree = "<group>"; };
+		942CCA2920CF762E003331F7 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
+		942CCA2A20CF762E003331F7 /* isma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isma.h; sourceTree = "<group>"; };
+		942CCA2B20CF762E003331F7 /* mp4v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mp4v2.h; sourceTree = "<group>"; };
+		942CCA2C20CF762E003331F7 /* track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track.h; sourceTree = "<group>"; };
+		942CCA2D20CF762E003331F7 /* project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = project.h; sourceTree = "<group>"; };
+		942CCA2E20CF762E003331F7 /* itmf_tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itmf_tags.h; sourceTree = "<group>"; };
+		942CCA2F20CF762E003331F7 /* track_prop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track_prop.h; sourceTree = "<group>"; };
+		942CCA3020CF762E003331F7 /* sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sample.h; sourceTree = "<group>"; };
+		942CCA3120CF762E003331F7 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		942CCA3220CF762E003331F7 /* itmf_generic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itmf_generic.h; sourceTree = "<group>"; };
+		942CCA3420CF762E003331F7 /* libmp4v2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp4v2.a; sourceTree = "<group>"; };
+		942CCA3620CF77E9003331F7 /* MP4Encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MP4Encoder.h; sourceTree = "<group>"; };
+		942CCA3720CF77E9003331F7 /* MP4Encoder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MP4Encoder.mm; sourceTree = "<group>"; };
+		942CCA3920CF9FAC003331F7 /* LSMP4EncoderManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSMP4EncoderManager.h; sourceTree = "<group>"; };
+		942CCA3A20CF9FAC003331F7 /* LSMP4EncoderManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LSMP4EncoderManager.mm; sourceTree = "<group>"; };
+		942CCA3C20CFBAAD003331F7 /* 184901AA.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 184901AA.mp4; sourceTree = "<group>"; };
 		E60E8C2919EF70BB005B5B6E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		E612EAE417F7E0F800BEE660 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		E6166C9B17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IJKMediaDemo-Prefix.pch"; sourceTree = "<group>"; };
@@ -183,6 +207,7 @@
 				E64D4F4F1938CD2100F1C75D /* QuartzCore.framework in Frameworks */,
 				E6903F0017EAF70200CFD954 /* UIKit.framework in Frameworks */,
 				45D57D631A53233800BDD389 /* VideoToolbox.framework in Frameworks */,
+				942CCA3520CF762E003331F7 /* libmp4v2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +217,7 @@
 		942CC95C20CA2C2C003331F7 /* LSQMediaManager */ = {
 			isa = PBXGroup;
 			children = (
+				942CCA2220CF762D003331F7 /* mp4v2 */,
 				942CC96C20CA43ED003331F7 /* OpenGLView20.h */,
 				942CC96B20CA43EC003331F7 /* OpenGLView20.m */,
 				942CC96120CA2C79003331F7 /* LSPlayerMovieDecoder.h */,
@@ -202,9 +228,59 @@
 				942CC99C20CB80E1003331F7 /* LSSphere.mm */,
 				942CC9ED20CF62A4003331F7 /* opencv_ios.h */,
 				942CC9EE20CF62A4003331F7 /* opencv_ios.mm */,
+				942CCA3620CF77E9003331F7 /* MP4Encoder.h */,
+				942CCA3720CF77E9003331F7 /* MP4Encoder.mm */,
+				942CCA3920CF9FAC003331F7 /* LSMP4EncoderManager.h */,
+				942CCA3A20CF9FAC003331F7 /* LSMP4EncoderManager.mm */,
 			);
 			name = LSQMediaManager;
 			path = ../../IJKMediaPlayer/LSQMediaManager;
+			sourceTree = "<group>";
+		};
+		942CCA2220CF762D003331F7 /* mp4v2 */ = {
+			isa = PBXGroup;
+			children = (
+				942CCA2320CF762D003331F7 /* include */,
+				942CCA3320CF762E003331F7 /* lib */,
+			);
+			path = mp4v2;
+			sourceTree = "<group>";
+		};
+		942CCA2320CF762D003331F7 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				942CCA2420CF762D003331F7 /* mp4v2 */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		942CCA2420CF762D003331F7 /* mp4v2 */ = {
+			isa = PBXGroup;
+			children = (
+				942CCA2520CF762E003331F7 /* streaming.h */,
+				942CCA2620CF762E003331F7 /* chapter.h */,
+				942CCA2720CF762E003331F7 /* file_prop.h */,
+				942CCA2820CF762E003331F7 /* general.h */,
+				942CCA2920CF762E003331F7 /* file.h */,
+				942CCA2A20CF762E003331F7 /* isma.h */,
+				942CCA2B20CF762E003331F7 /* mp4v2.h */,
+				942CCA2C20CF762E003331F7 /* track.h */,
+				942CCA2D20CF762E003331F7 /* project.h */,
+				942CCA2E20CF762E003331F7 /* itmf_tags.h */,
+				942CCA2F20CF762E003331F7 /* track_prop.h */,
+				942CCA3020CF762E003331F7 /* sample.h */,
+				942CCA3120CF762E003331F7 /* platform.h */,
+				942CCA3220CF762E003331F7 /* itmf_generic.h */,
+			);
+			path = mp4v2;
+			sourceTree = "<group>";
+		};
+		942CCA3320CF762E003331F7 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				942CCA3420CF762E003331F7 /* libmp4v2.a */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 		E63FC27717F032D9003551EB /* Misc */ = {
@@ -273,6 +349,7 @@
 		E6903F0517EAF70200CFD954 /* IJKMediaDemo */ = {
 			isa = PBXGroup;
 			children = (
+				942CCA3C20CFBAAD003331F7 /* 184901AA.mp4 */,
 				942CC9A520CE12B7003331F7 /* planet.jpg */,
 				942CC9A120CB888A003331F7 /* 1123.png */,
 				942CC99F20CB86C9003331F7 /* opencv2.framework */,
@@ -434,6 +511,7 @@
 				E6903F1417EAF70200CFD954 /* Default@2x.png in Resources */,
 				E6903F1617EAF70200CFD954 /* Default-568h@2x.png in Resources */,
 				E67323A71B69E6F800CB9036 /* AppIcons.xcassets in Resources */,
+				942CCA3D20CFBAAD003331F7 /* 184901AA.mp4 in Resources */,
 				E6166C9C17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch in Resources */,
 				E6A9B56517EDA72C00A1A500 /* IJKMoviePlayerViewController.xib in Resources */,
 				E6F524EC1B183A0700B69DC7 /* IJKDemoSampleViewController.xib in Resources */,
@@ -462,9 +540,11 @@
 				55E809E21B143C47003E98A5 /* IJKDemoMainViewController.m in Sources */,
 				E6903F1017EAF70200CFD954 /* IJKAppDelegate.m in Sources */,
 				E6F524EB1B183A0700B69DC7 /* IJKDemoSampleViewController.m in Sources */,
+				942CCA3820CF77E9003331F7 /* MP4Encoder.mm in Sources */,
 				E6A9B56417EDA72C00A1A500 /* IJKMoviePlayerViewController.m in Sources */,
 				55E809F11B146C80003E98A5 /* Barcode.m in Sources */,
 				E66F8DCB17EEDD8B00354D80 /* IJKMediaControl.m in Sources */,
+				942CCA3B20CF9FAC003331F7 /* LSMP4EncoderManager.mm in Sources */,
 				942CC9EF20CF62A4003331F7 /* opencv_ios.mm in Sources */,
 				55E809EA1B145BC2003E98A5 /* IJKDemoInputURLViewController.m in Sources */,
 				55E809EE1B146C1E003E98A5 /* IJKQRCodeScanViewController.m in Sources */,
@@ -577,10 +657,14 @@
 					../IJKMediaPlayer/IJKMediaPlayer/ijkmedia/ijksdl/ios,
 					../build/universal/include,
 					../../ijkmedia/ijksdl/ffmpeg,
+					../IJKMediaPlayer/LSQMediaManager/mp4v2/include/,
 				);
 				INFOPLIST_FILE = "IJKMediaDemo/IJKMediaDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../IJKMediaPlayer/LSQMediaManager/mp4v2/lib,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "tv.danmaku.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -613,10 +697,14 @@
 					../IJKMediaPlayer/IJKMediaPlayer/ijkmedia/ijksdl/ios,
 					../build/universal/include,
 					../../ijkmedia/ijksdl/ffmpeg,
+					../IJKMediaPlayer/LSQMediaManager/mp4v2/include/,
 				);
 				INFOPLIST_FILE = "IJKMediaDemo/IJKMediaDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../IJKMediaPlayer/LSQMediaManager/mp4v2/lib,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "tv.danmaku.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

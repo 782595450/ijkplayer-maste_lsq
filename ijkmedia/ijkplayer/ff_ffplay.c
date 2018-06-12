@@ -1656,7 +1656,12 @@ static int queue_picture(FFPlayer *ffp, AVFrame *src_frame, double pts, double d
 #endif
 #endif
         // FIXME: set swscale options
-        if (SDL_VoutFillFrameYUVOverlay(vp->bmp, src_frame) < 0) {
+        PacketQueue videoq = is->videoq;
+//        is->auddec.first_frame_decoded
+        Decoder viddec = is->auddec;
+        MyAVPacketList *last_pkt = videoq.first_pkt;
+        // &last_pkt->pkt
+        if (SDL_VoutFillFrameYUVOverlay(vp->bmp, src_frame,&last_pkt->pkt) < 0) {
             av_log(NULL, AV_LOG_FATAL, "Cannot initialize the conversion context\n");
             exit(1);
         }

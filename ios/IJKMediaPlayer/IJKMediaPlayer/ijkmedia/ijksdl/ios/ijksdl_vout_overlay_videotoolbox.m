@@ -83,7 +83,7 @@ static void func_unref(SDL_VoutOverlay *overlay)
     return;
 }
 
-static int func_fill_frame(SDL_VoutOverlay *overlay, const AVFrame *frame)
+static int func_fill_frame(SDL_VoutOverlay *overlay, const AVFrame *frame,AVPacket *sourcePacket)
 {
     assert(frame->format == IJK_AV_PIX_FMT__VIDEO_TOOLBOX);
 

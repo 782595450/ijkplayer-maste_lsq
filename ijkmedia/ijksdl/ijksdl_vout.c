@@ -110,10 +110,10 @@ void SDL_VoutUnrefYUVOverlay(SDL_VoutOverlay *overlay)
         overlay->unref(overlay);
 }
 
-int SDL_VoutFillFrameYUVOverlay(SDL_VoutOverlay *overlay, const AVFrame *frame)
+int SDL_VoutFillFrameYUVOverlay(SDL_VoutOverlay *overlay, const AVFrame *frame,AVPacket *sourcePacket)
 {
     if (!overlay || !overlay->func_fill_frame)
         return -1;
 
-    return overlay->func_fill_frame(overlay, frame);
+    return overlay->func_fill_frame(overlay, frame,sourcePacket);
 }

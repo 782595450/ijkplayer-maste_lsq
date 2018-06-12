@@ -46,6 +46,7 @@ struct SDL_VoutOverlay {
     int sar_num;
     int sar_den;
 
+    AVPacket *sourcePacket;
     SDL_Class               *opaque_class;
     SDL_VoutOverlay_Opaque  *opaque;
 
@@ -54,7 +55,7 @@ struct SDL_VoutOverlay {
     int     (*unlock)(SDL_VoutOverlay *overlay);
     void    (*unref)(SDL_VoutOverlay *overlay);
 
-    int     (*func_fill_frame)(SDL_VoutOverlay *overlay, const AVFrame *frame);
+    int     (*func_fill_frame)(SDL_VoutOverlay *overlay, const AVFrame *frame,AVPacket *sourcePacket);
 };
 
 typedef struct SDL_Vout_Opaque SDL_Vout_Opaque;
@@ -81,6 +82,6 @@ int     SDL_VoutLockYUVOverlay(SDL_VoutOverlay *overlay);
 int     SDL_VoutUnlockYUVOverlay(SDL_VoutOverlay *overlay);
 void    SDL_VoutFreeYUVOverlay(SDL_VoutOverlay *overlay);
 void    SDL_VoutUnrefYUVOverlay(SDL_VoutOverlay *overlay);
-int     SDL_VoutFillFrameYUVOverlay(SDL_VoutOverlay *overlay, const AVFrame *frame);
+int SDL_VoutFillFrameYUVOverlay(SDL_VoutOverlay *overlay, const AVFrame *frame,AVPacket *sourcePacket);
 
 #endif
