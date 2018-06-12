@@ -28,6 +28,8 @@
 		942CC99D20CB80E1003331F7 /* LSSphere.mm in Sources */ = {isa = PBXBuildFile; fileRef = 942CC99C20CB80E1003331F7 /* LSSphere.mm */; };
 		942CC9A020CB86C9003331F7 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942CC99F20CB86C9003331F7 /* opencv2.framework */; };
 		942CC9A220CB888A003331F7 /* 1123.png in Resources */ = {isa = PBXBuildFile; fileRef = 942CC9A120CB888A003331F7 /* 1123.png */; };
+		942CC9A620CE12B7003331F7 /* planet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 942CC9A520CE12B7003331F7 /* planet.jpg */; };
+		942CC9EF20CF62A4003331F7 /* opencv_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 942CC9EE20CF62A4003331F7 /* opencv_ios.mm */; };
 		E60E8C2A19EF70BB005B5B6E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E60E8C2919EF70BB005B5B6E /* CoreMedia.framework */; };
 		E612EAE517F7E0F800BEE660 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E612EAE417F7E0F800BEE660 /* MediaPlayer.framework */; };
 		E6166C9C17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch in Resources */ = {isa = PBXBuildFile; fileRef = E6166C9B17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch */; };
@@ -120,6 +122,9 @@
 		942CC99C20CB80E1003331F7 /* LSSphere.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LSSphere.mm; sourceTree = "<group>"; };
 		942CC99F20CB86C9003331F7 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		942CC9A120CB888A003331F7 /* 1123.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1123.png; sourceTree = "<group>"; };
+		942CC9A520CE12B7003331F7 /* planet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet.jpg; sourceTree = "<group>"; };
+		942CC9ED20CF62A4003331F7 /* opencv_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opencv_ios.h; sourceTree = "<group>"; };
+		942CC9EE20CF62A4003331F7 /* opencv_ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = opencv_ios.mm; sourceTree = "<group>"; };
 		E60E8C2919EF70BB005B5B6E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		E612EAE417F7E0F800BEE660 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		E6166C9B17EDA4A20006B956 /* IJKMediaDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IJKMediaDemo-Prefix.pch"; sourceTree = "<group>"; };
@@ -195,6 +200,8 @@
 				942CC97620CA6CE3003331F7 /* AVFrameData.m */,
 				942CC99B20CB80E1003331F7 /* LSSphere.h */,
 				942CC99C20CB80E1003331F7 /* LSSphere.mm */,
+				942CC9ED20CF62A4003331F7 /* opencv_ios.h */,
+				942CC9EE20CF62A4003331F7 /* opencv_ios.mm */,
 			);
 			name = LSQMediaManager;
 			path = ../../IJKMediaPlayer/LSQMediaManager;
@@ -266,6 +273,7 @@
 		E6903F0517EAF70200CFD954 /* IJKMediaDemo */ = {
 			isa = PBXGroup;
 			children = (
+				942CC9A520CE12B7003331F7 /* planet.jpg */,
 				942CC9A120CB888A003331F7 /* 1123.png */,
 				942CC99F20CB86C9003331F7 /* opencv2.framework */,
 				942CC95C20CA2C2C003331F7 /* LSQMediaManager */,
@@ -434,6 +442,7 @@
 				55E809E61B145B55003E98A5 /* LaunchScreen.xib in Resources */,
 				E67323A81B69E6F800CB9036 /* LaunchImages.xcassets in Resources */,
 				55E809EB1B145BC2003E98A5 /* IJKDemoInputURLViewController.xib in Resources */,
+				942CC9A620CE12B7003331F7 /* planet.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +465,7 @@
 				E6A9B56417EDA72C00A1A500 /* IJKMoviePlayerViewController.m in Sources */,
 				55E809F11B146C80003E98A5 /* Barcode.m in Sources */,
 				E66F8DCB17EEDD8B00354D80 /* IJKMediaControl.m in Sources */,
+				942CC9EF20CF62A4003331F7 /* opencv_ios.mm in Sources */,
 				55E809EA1B145BC2003E98A5 /* IJKDemoInputURLViewController.m in Sources */,
 				55E809EE1B146C1E003E98A5 /* IJKQRCodeScanViewController.m in Sources */,
 				942CC96D20CA43ED003331F7 /* OpenGLView20.m in Sources */,

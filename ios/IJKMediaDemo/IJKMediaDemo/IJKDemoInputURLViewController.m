@@ -19,6 +19,7 @@
 #import "LSPlayerMovieDecoder.h"
 #import "OpenGLView20.h"
 #import "LSSphere.h"
+#import "opencv_ios.h"
 #define LSScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define LSScreenHeight [UIScreen mainScreen].bounds.size.height
 
@@ -28,6 +29,8 @@
     OpenGLView20 *_panoplayer;
     unsigned char* m_pBuffer;
     LSSphere *sphere;
+    UIImageView *openvcImageView;
+    opencv_ios *opencvhandle;
 }
 
 @property(nonatomic,strong) IBOutlet UITextView *textView;
@@ -59,13 +62,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+
+//    [self openvc];
+    
+    [self openglplay];
+}
+
+- (void)openglplay{
     _panoplayer = [[OpenGLView20 alloc] init];
     _panoplayer.backgroundColor = [UIColor blueColor];
     _panoplayer.frame = CGRectMake(0, 44, LSScreenWidth, LSScreenHeight);
-//    NSLog(@" frame size %f,%f",_panoplayer.frame.size.width,_panoplayer.frame.size.height);
+    //    NSLog(@" frame size %f,%f",_panoplayer.frame.size.width,_panoplayer.frame.size.height);
     [self.view addSubview:_panoplayer];
 
-    sphere = [LSSphere new];
+}
+
+- (void)sphere{
+    // 全景测试
+    //    sphere = [LSSphere new];
+    //    [sphere change:nil];
+}
+
+- (void)openvc{
+    // opencv测试
+    openvcImageView = [UIImageView new];
+    [self.view addSubview:openvcImageView];
+    openvcImageView.frame = self.view.bounds;
+
+    opencvhandle = [opencv_ios new];
     
 }
 
@@ -75,7 +100,7 @@
 //    path = @"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear0/prog_index.m3u8";
 //    path = @"http://media.detu.com/@/17717910-8057-4FDF-2F33-F8B1F68282395/2016-08-22/57baeda5920ea-similar.mp4";
     path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
-//    path =  [[NSBundle mainBundle] pathForResource:@"1123" ofType:@"png"];
+//    path =  [[NSBundle mainBundle] pathForResource:@"planet" ofType:@"jpg"];
 //    path = @"http://storage.yeelens.com/vod/video_audio/vod.m3u8";
     
     decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
@@ -101,13 +126,97 @@
 -(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame;{
 
     AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
+    unsigned char *pBGR24 = malloc(frame->w*frame->h*3);
+    
+    YV12ToBGR24_Native(frameData.data0, frameData.data0, frameData.data0, pBGR24, frame->w, frame->h);
+    
     dispatch_async(dispatch_get_main_queue(), ^{
+//        openvcImageView.image = [opencvhandle imageCanny:pBGR24 width:frame->w heigth:frame->h];
 //        [_panoplayer displayYUV420pDatas:[sphere change:frame->pixels[0]] width:frame->w height:frame->h];
         [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
+        free(pBGR24);
     });
     
 }
 
+bool YV12ToBGR24_Native(unsigned char* pY,unsigned char* pU,unsigned char* pV,unsigned char* pBGR24,int width,int height)
+{
+    if (width < 1 || height < 1 || pY == NULL || pBGR24 == NULL)
+        return false;
+    const long len = width * height;
+//    unsigned char* yData = pYUV;
+//    unsigned char* vData = &yData[len];
+//    unsigned char* uData = &vData[len >> 2];
+    unsigned char* yData = pY;
+    unsigned char* vData = pU;
+    unsigned char* uData = pV;
+
+    
+    int bgr[3];
+    int yIdx,uIdx,vIdx,idx;
+    for (int i = 0;i < height;i++){
+        for (int j = 0;j < width;j++){
+            yIdx = i * width + j;
+//            vIdx = (i/2) * (width/2) + (j/2);
+            vIdx = (i*width+j)/2;
+            uIdx = vIdx;
+            
+            bgr[0] = (int)(yData[yIdx] + 1.732446 * (uData[vIdx] - 128));                                    // b分量
+            bgr[1] = (int)(yData[yIdx] - 0.698001 * (uData[uIdx] - 128) - 0.703125 * (vData[vIdx] - 128));    // g分量
+            bgr[2] = (int)(yData[yIdx] + 1.370705 * (vData[uIdx] - 128));                                    // r分量
+            
+            for (int k = 0;k < 3;k++){
+                idx = (i * width + j) * 3 + k;
+                if(bgr[k] >= 0 && bgr[k] <= 255)
+                    pBGR24[idx] = bgr[k];
+                else
+                    pBGR24[idx] = (bgr[k] < 0)?0:255;
+            }
+        }
+    }
+    return true;
+    
+}
+
+
+//- (void)swithrgbData:(unsigned char *)pBGR heigth:(int)height width:(int)width{
+//    // write out new image format.
+//    int midy = height / 2;
+//    int midx = width / 2;
+//    int maxmag = (midy > midx ? midy : midx);
+//    int circum = 2 * M_PI * maxmag;     // c = 2*pi*r
+//    printf("P6\n");
+//    printf("%d %d\n", circum, maxmag);
+//    unsigned char *yData = pBGR;
+//
+//    unsigned char *pBGR24 = malloc(maxmag*circum);
+//
+//    char black[3] = {0,0,0};
+//    int idx;
+//    for (int y = 0; y < maxmag; y++) {
+//        for (int x = 0; x < circum; x++) {
+//            double theta = -1.0 * x / maxmag;       // -(x * 2.0 * M_PI / width);
+//            double mag = maxmag - y;                // y * 1.0 * maxmag / height;
+//            int targety = lrint(midy + mag * cos(theta));
+//            int targetx = lrint(midx + mag * sin(theta));
+//            if (targety < 0 || targety >= height || targetx < 0 || targetx >= width) {
+//
+//            for (int k = 0;k < 3;k++){
+//                idx = (y * circum + x) * 3 + k;
+//                pBGR24[idx] = yData[targety];
+////                if(bgr[k] >= 0 && bgr[k] <= 255)
+////                    pBGR24[idx] = bgr[k];
+////                else
+////                    pBGR24[idx] = (bgr[k] < 0)?0:255;
+//            }
+//
+//            } else {
+////                fwrite(&pixels[targety][targetx * 3], 1, 3, stdout);
+//            }
+//        }
+//    }
+//
+//}
 
 - (AVFrameData *) createFrameData: (SDL_VoutOverlay*) frame
                      trimPadding: (BOOL) trim{

@@ -14,12 +14,23 @@
 
 
 @implementation LSSphere
-int x_dot = 177;         //全景图像的圆心X坐标
-int y_dot = 130;         //全景图像的圆心X坐标
-int Width;
-int Height;
+
+
+
+
 int inner_Radius = 50;   //全景图像的内径
 int outer_Radius = 100;  //全景图像的外径
+int x_dot = 177;         //全景图像的圆心X坐标
+int y_dot = 130;         //全景图像的圆心X坐标
+
+int Width = int(2 * PI * outer_Radius);   //展开图像的宽
+int Height = outer_Radius - inner_Radius; //展开图像的高
+
+
+
+
+
+
 
 - (void)geData{
     
@@ -73,13 +84,14 @@ uchar* GetRGB(int x,int y,IplImage* src)
 
 
 - (char *)change:(unsigned char *)data{
+    [self geData];
     int i,j;
     double dw_Angle;
     int i_Radius;
     CvPoint pt;
     IplImage* src,* dst;
     NSString *path;
-    path =  [[NSBundle mainBundle] pathForResource:@"1123" ofType:@"png"];
+    path =  [[NSBundle mainBundle] pathForResource:@"planet" ofType:@"jpg"];
 
 
     src = cvLoadImage([path UTF8String]);
@@ -100,9 +112,15 @@ uchar* GetRGB(int x,int y,IplImage* src)
         }
 
     }
+    
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * documentsDirectory = [paths objectAtIndex:0];
+    // Now we get the full path to the file
+    NSString * fullPathToFile = [documentsDirectory stringByAppendingString:@"/planet.png"];
+    cvSaveImage([fullPathToFile UTF8String], dst);
+
     return dst->imageData;
     
-//    cvSaveImage("dst.bmp", dst);
 //    cvNamedWindow( "Image src view", 1 );
 //    cvNamedWindow( "Image dst view", 1 );
 //    cvShowImage( "Image src view", src );

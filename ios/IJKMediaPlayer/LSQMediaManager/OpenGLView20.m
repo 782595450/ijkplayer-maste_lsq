@@ -502,6 +502,7 @@ void main(void)\
             [self setVideoSize:w height:h];
         }
         [EAGLContext setCurrentContext:_glContext];
+
         
         glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RED_EXT, GL_UNSIGNED_BYTE, data.data0);
