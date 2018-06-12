@@ -10,6 +10,13 @@
 
 @interface opencv_ios : NSObject
 
+// 边缘检测
 - (UIImage *)imageCanny:(unsigned char*)bgrData width:(int)width heigth:(int)heitht;
+
+// 图像腐蚀
+- (UIImage *)element:(unsigned char*)bgrData width:(int)width heigth:(int)heitht;
+
+// 图像模糊
+- (UIImage *)blur:(unsigned char*)bgrData width:(int)width heigth:(int)heitht;
 
 @end
