@@ -15,6 +15,7 @@
 using namespace cv;
 @interface opencv_ios (){
 //    Mat frame;
+    
 }
 
 @end

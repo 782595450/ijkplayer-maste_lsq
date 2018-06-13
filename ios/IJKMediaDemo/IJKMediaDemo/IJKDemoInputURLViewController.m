@@ -21,6 +21,8 @@
 #import "LSSphere.h"
 #import "opencv_ios.h"
 #import "LSMP4EncoderManager.h"
+#import "Facerecognition_opencv.h"
+
 #define LSScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define LSScreenHeight [UIScreen mainScreen].bounds.size.height
 
@@ -33,6 +35,7 @@
     UIImageView *openvcImageView;
     opencv_ios *opencvhandle;
     LSMP4EncoderManager *encoderManager;
+    Facerecognition_opencv *faceopencv;
 }
 
 @property(nonatomic,strong) IBOutlet UITextView *textView;
@@ -70,7 +73,13 @@
     
     [self openglplay];
     
-    
+//    [self faceOpencv];
+}
+
+- (void)faceOpencv{
+    faceopencv = [Facerecognition_opencv new];
+    UIImage *image = [faceopencv picturePreprocessing:[UIImage imageNamed:@"IMG_2229.JPG"]];
+    int i;
 }
 
 - (void)openglplay{
