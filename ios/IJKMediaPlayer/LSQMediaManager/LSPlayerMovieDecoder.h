@@ -41,6 +41,9 @@ typedef enum {
 @end
 
 @interface LSPlayerMovieDecoder : NSObject
+@property (nonatomic,readonly)   float duration;
+@property (nonatomic,assign)   double currentTime;
+
 @property (nonatomic,weak)   id<MovieDecoderDelegate> delegate;
 -(id)initWithMovie:(NSString*)path;
 -(void)start;

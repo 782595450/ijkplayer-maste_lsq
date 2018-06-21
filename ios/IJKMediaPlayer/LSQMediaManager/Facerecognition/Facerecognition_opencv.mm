@@ -46,15 +46,38 @@ using namespace cv;
 
     cascade.detectMultiScale(frame_gray, faces, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING, original_size);
 
+//    Scalar colors[] =
+//    {
+//        // 红橙黄绿青蓝紫
+//        CV_RGB(255, 0, 0),
+//        CV_RGB(255, 97, 0),
+//        CV_RGB(255, 255, 0),
+//        CV_RGB(0, 255, 0),
+//        CV_RGB(0, 255, 255),
+//        CV_RGB(0, 0, 255),
+//        CV_RGB(160, 32, 240)
+//    };
+
     for (size_t i = 0; i < faces.size(); i++) {
         Mat faceROI = frame(faces[i]);
         Mat myface;
         resize(faceROI, myface, cv::Size(92,112));
         return MatToUIImage(myface);
         break;
+        
+        
+//        cv::Point  center;
+//        int radius;
+//        center.x = cvRound((faces[i].x + faces[i].width * 0.5));
+//        center.y = cvRound((faces[i].y + faces[i].height * 0.5));
+//
+//        radius = cvRound((faces[i].width + faces[i].height) * 0.25);
+//        circle(frame, center, radius, colors[i % 7], 2);
+
     }
     
-    
+//        return MatToUIImage(frame);
+
     
 }
 

@@ -123,6 +123,22 @@
     
 }
 
+-(float)duration{
+    return _player.duration;
+}
+
+-(double)currentTime{
+    return _player.currentPlaybackTime ;
+}
+
+// 拖动进度条设置播放时间
+-(void)setCurrentTime:(double)currentTime{
+    [_lock lock];
+    [_player setCurrentPlaybackTime:currentTime];
+    [self.delegate movieDecoderDidSeeked];
+    [_lock unlock];
+}
+
 -(void)dealloc{
     NSLog(@"LSPlayerMovie dealloc");
     [self cleargc];

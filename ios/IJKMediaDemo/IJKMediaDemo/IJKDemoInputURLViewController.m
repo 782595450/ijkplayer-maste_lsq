@@ -36,6 +36,8 @@
     opencv_ios *opencvhandle;
     LSMP4EncoderManager *encoderManager;
     Facerecognition_opencv *faceopencv;
+    UISlider *progressSlider;
+    UILabel *currentTimeLabel,*durationTimeLabel;
 }
 
 @property(nonatomic,strong) IBOutlet UITextView *textView;
@@ -74,6 +76,22 @@
     [self openglplay];
     
 //    [self faceOpencv];
+    
+    
+    progressSlider = [[UISlider alloc] init];
+    [self.view addSubview:progressSlider];
+    progressSlider.frame = CGRectMake(50, LSScreenHeight-100, LSScreenWidth-100, 30);
+    
+    currentTimeLabel = [UILabel new];
+    [self.view addSubview:currentTimeLabel];
+    currentTimeLabel.text = @"--:--";
+    currentTimeLabel.frame = CGRectMake(0, LSScreenHeight-50, 50, 30);
+    
+    durationTimeLabel = [UILabel new];
+    [self.view addSubview:durationTimeLabel];
+    durationTimeLabel.textColor = [UIColor whiteColor];
+    durationTimeLabel.text = @"--:--";
+    durationTimeLabel.frame = CGRectMake(LSScreenWidth-50, LSScreenHeight-50, 50, 30);
 }
 
 - (void)faceOpencv{
@@ -113,15 +131,32 @@
 //    path = @"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear0/prog_index.m3u8";
 //    path = @"http://media.detu.com/@/17717910-8057-4FDF-2F33-F8B1F68282395/2016-08-22/57baeda5920ea-similar.mp4";
 //    path = @"http://media.qicdn.detu.com/@/70955075-5571-986D-9DC4-450F13866573/2016-05-19/573d15dfa19f3-2048x1024.m3u8";
-    path =  [[NSBundle mainBundle] pathForResource:@"184901AA" ofType:@"mp4"];
-//    path = @"http://storage.yeelens.com/vod/video_audio/vod.m3u8";
+//    path =  [[NSBundle mainBundle] pathForResource:@"1123" ofType:@"png"];
+//    path = @"http://yeelen.oss-cn-shenzhen.aliyuncs.com/7/500E70B410540307/20180613/20180613142856.m3u8";
+//    path =  [[NSBundle mainBundle] pathForResource:@"184901AA" ofType:@"mp4"];
+//    path = @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
+//    path = @"http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8";
+//    path = @"http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8";
+    path = @"http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8";
     
     decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
     decoder.delegate = self;
     
 }
 
--(void)movieDecoderDidFinishDecoding{
+-(void)setCurrentTime:(float)currentTime{
+    decoder.currentTime=currentTime;
+}
+
+-(float)currentTime{
+    return decoder.currentTime;
+}
+
+-(float)duration{
+    return decoder.duration;
+}
+
+- (void)movieDecoderDidFinishDecoding{
     
 }
 
@@ -160,8 +195,32 @@
 //        }
 //        [encoderManager writeH264Data:frame->sourcePacket->data size:frame->sourcePacket->size];
         
+        [self updateTime];
     });
     
+
+}
+
+
+- (void)updateTime{
+    NSTimeInterval duration = decoder.duration;
+    NSInteger intDuration = duration + 0.5;
+    if (intDuration > 0) {
+        
+        durationTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)(intDuration / 60), (int)(intDuration % 60)];
+    } else {
+        durationTimeLabel.text = @"--:--";
+    }
+    NSTimeInterval positon = decoder.currentTime;
+    NSInteger intPosition = positon + 0.5;
+    if (intDuration > 0) {
+        progressSlider.value = positon;
+    } else {
+        progressSlider.value = 0.0f;
+    }
+    currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)(intPosition / 60), (int)(intPosition % 60)];
+    
+
 }
 
 - (void)recordMp4{
