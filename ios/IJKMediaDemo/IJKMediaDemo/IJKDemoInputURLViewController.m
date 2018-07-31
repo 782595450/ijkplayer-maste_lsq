@@ -139,8 +139,8 @@
 //    path = @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
 //    path = @"http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8";
 //    path = @"http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8";
-//    path = @"http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8";
-    path =  [[NSBundle mainBundle] pathForResource:@"184901AA" ofType:@"mp4"];
+    path = @"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
+//    path =  [[NSBundle mainBundle] pathForResource:@"184901AA" ofType:@"mp4"];
     
     decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
     decoder.delegate = self;

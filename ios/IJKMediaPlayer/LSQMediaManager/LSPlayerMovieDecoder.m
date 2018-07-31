@@ -71,7 +71,30 @@
 //    [options setPlayerOptionValue:@"fcc-_es2" forKey:@"overlay-format"];
     //disable audio
     //[options setPlayerOptionIntValue:1 forKey:@"an"];
-    [options setPlayerOptionValue:@"fcc-i420"          forKey:@"overlay-format"];
+//    [options setPlayerOptionValue:@"fcc-i420"          forKey:@"overlay-format"];
+    [options setPlayerOptionIntValue:30  forKey:@"max-fps"];
+    [options setPlayerOptionIntValue:1  forKey:@"framedrop"];
+    [options setPlayerOptionIntValue:0  forKey:@"start-on-prepared"];
+    [options setPlayerOptionIntValue:0  forKey:@"http-detect-range-support"];
+    [options setPlayerOptionIntValue:48  forKey:@"skip_loop_filter"];
+    [options setPlayerOptionIntValue:0  forKey:@"packet-buffering"];
+    [options setPlayerOptionIntValue:2000000 forKey:@"analyzeduration"];
+    [options setPlayerOptionIntValue:25  forKey:@"min-frames"];
+    [options setPlayerOptionIntValue:1  forKey:@"start-on-prepared"];
+    
+    [options setCodecOptionIntValue:8 forKey:@"skip_frame"];
+    
+    [options setFormatOptionValue:@"nobuffer" forKey:@"fflags"];
+    [options setFormatOptionValue:@"8192" forKey:@"probsize"];
+    [options setFormatOptionIntValue:0 forKey:@"auto_convert"];
+    [options setFormatOptionIntValue:1 forKey:@"reconnect"];
+    
+    [options setPlayerOptionIntValue:1  forKey:@"videotoolbox"];
+    
+    // 帧速率(fps) （可以改，确认非标准桢率会导致音画不同步，所以只能设定为15或者29.97）
+    [options setPlayerOptionIntValue:29.97 forKey:@"r"];
+    // -vol——设置音量大小，256为标准音量。（要设置成两倍音量时则输入512，依此类推
+    [options setPlayerOptionIntValue:512 forKey:@"vol"];
 
 
     _player = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:path] withOptions:options];
