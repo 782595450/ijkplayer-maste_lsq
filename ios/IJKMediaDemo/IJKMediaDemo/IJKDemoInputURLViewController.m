@@ -22,6 +22,8 @@
 #import "opencv_ios.h"
 #import "LSMP4EncoderManager.h"
 #import "Facerecognition_opencv.h"
+#include "libavcodec/avcodec.h"
+#include "libswscale/swscale.h"
 
 #define LSScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define LSScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -71,9 +73,9 @@
     [super viewDidLoad];
 
 
-//    [self openvc];
+    [self openvc];
     
-    [self openglplay];
+//    [self openglplay];
     
 //    [self faceOpencv];
     
@@ -119,7 +121,7 @@
     // opencv测试
     openvcImageView = [UIImageView new];
     [self.view addSubview:openvcImageView];
-    openvcImageView.frame = self.view.bounds;
+    openvcImageView.frame = CGRectMake(0, 44, LSScreenWidth, LSScreenHeight);
 
     opencvhandle = [opencv_ios new];
     
@@ -137,7 +139,8 @@
 //    path = @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
 //    path = @"http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8";
 //    path = @"http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8";
-    path = @"http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8";
+//    path = @"http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8";
+    path =  [[NSBundle mainBundle] pathForResource:@"184901AA" ofType:@"mp4"];
     
     decoder = [[LSPlayerMovieDecoder alloc] initWithMovie:path];
     decoder.delegate = self;
@@ -171,16 +174,27 @@
     
 }
 
--(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame;{
+-(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame{
 
     AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
-//    unsigned char *pBGR24 = malloc(frame->w*frame->h*3);
-//    YV12ToBGR24_Native(frameData.data0, frameData.data0, frameData.data0, pBGR24, frame->w, frame->h);
+    int height = frame->h;
+    int width = frame->w;
+    char *yuvData = malloc(width*height*1.5);
+    memcpy(yuvData, frameData.data0, width*height);
+    memcpy(yuvData+width*height, frameData.data1, width*height/4);
+    memcpy(yuvData+width*height*5/4, frameData.data2, width*height/4);
+
+    unsigned char *pBGR24 = malloc(frame->w*frame->h*3);
+    YV12ToBGR24_FFmpeg(yuvData, pBGR24, width, height);
+    free(yuvData);
     
+//    YV12ToBGR24_Native(frameData.data0, frameData.data0, frameData.data0, pBGR24, frame->w, frame->h);
+
     dispatch_async(dispatch_get_main_queue(), ^{
+        openvcImageView.image = [opencvhandle cvInter:pBGR24 width:frame->w heigth:frame->h];
 //        openvcImageView.image = [opencvhandle element:pBGR24 width:frame->w heigth:frame->h];
 //        [_panoplayer displayYUV420pDatas:[sphere change:frame->pixels[0]] width:frame->w height:frame->h];
-        [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
+//        [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
 //        free(pBGR24);
         
         // 录制视频 有bug
@@ -196,11 +210,43 @@
 //        [encoderManager writeH264Data:frame->sourcePacket->data size:frame->sourcePacket->size];
         
         [self updateTime];
+        free(pBGR24);
     });
     
 
 }
 
+bool YV12ToBGR24_FFmpeg(unsigned char* pYUV,unsigned char* pBGR24,int width,int height)
+{
+    if (width < 1 || height < 1 || pYUV == NULL || pBGR24 == NULL)
+        return false;
+    AVPicture pFrameYUV,pFrameBGR;
+    avpicture_fill(&pFrameYUV,pYUV,AV_PIX_FMT_YUV420P,width,height);
+    
+    //U,V互换
+    uint8_t * ptmp=pFrameYUV.data[1];
+    pFrameYUV.data[1]=pFrameYUV.data[2];
+    pFrameYUV.data [2]=ptmp;
+    
+    avpicture_fill(&pFrameBGR,pBGR24,AV_PIX_FMT_BGR24,width,height);
+    
+    struct SwsContext* imgCtx = NULL;
+    imgCtx = sws_getContext(width,height,AV_PIX_FMT_YUV420P,width,height,AV_PIX_FMT_BGR24,SWS_BILINEAR,0,0,0);
+    
+    if (imgCtx != NULL){
+        sws_scale(imgCtx,pFrameYUV.data,pFrameYUV.linesize,0,height,pFrameBGR.data,pFrameBGR.linesize);
+        if(imgCtx){
+            sws_freeContext(imgCtx);
+            imgCtx = NULL;
+        }
+        return true;
+    }
+    else{
+        sws_freeContext(imgCtx);
+        imgCtx = NULL;
+        return false;
+    }
+}
 
 - (void)updateTime{
     NSTimeInterval duration = decoder.duration;
@@ -226,6 +272,9 @@
 - (void)recordMp4{
     
 }
+
+
+
 bool YV12ToBGR24_Native(unsigned char* pY,unsigned char* pU,unsigned char* pV,unsigned char* pBGR24,int width,int height)
 {
     if (width < 1 || height < 1 || pY == NULL || pBGR24 == NULL)

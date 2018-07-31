@@ -1653,6 +1653,7 @@
 					IJKMediaPlayer/ijkmedia,
 					../../ijkmedia,
 					../../ijkmedia/ijksdl,
+					../../ijkmedia/ijkplayer/,
 				);
 				INFOPLIST_FILE = IJKMediaFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1700,6 +1701,7 @@
 					IJKMediaPlayer/ijkmedia,
 					../../ijkmedia,
 					../../ijkmedia/ijksdl,
+					../../ijkmedia/ijkplayer/,
 				);
 				INFOPLIST_FILE = IJKMediaFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

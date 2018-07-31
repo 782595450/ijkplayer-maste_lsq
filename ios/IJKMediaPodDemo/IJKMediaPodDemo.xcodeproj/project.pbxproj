@@ -194,6 +194,7 @@
 				TargetAttributes = {
 					E633999E1B60E790008F50CE = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = A4LWFHDJZJ;
 					};
 					E63399B71B60E790008F50CE = {
 						CreatedOnToolsVersion = 6.4;
@@ -409,6 +410,7 @@
 			baseConfigurationReference = 47C5C1BCE477FD39847AD2F8 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A4LWFHDJZJ;
 				INFOPLIST_FILE = IJKMediaPodDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -420,6 +422,7 @@
 			baseConfigurationReference = EAB805C5FAE107E60F65BC10 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A4LWFHDJZJ;
 				INFOPLIST_FILE = IJKMediaPodDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

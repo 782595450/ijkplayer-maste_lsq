@@ -54,7 +54,6 @@ using namespace cv;
 }
 
 
-
 // 图像模糊
 - (UIImage *)blur:(unsigned char*)bgrData width:(int)width heigth:(int)heitht{
     Mat frame;
@@ -65,6 +64,20 @@ using namespace cv;
     // 进行均值滤波操作
     blur(frame, dstImage, cv::Size(1,1));   // size只能是整数，越大模糊效果越好
     
+    return MatToUIImage(dstImage);
+    
+}
+
+// 图像插值
+- (UIImage *)cvInter:(unsigned char*)bgrData width:(int)width heigth:(int)heitht{
+    Mat frame;
+    frame.create(cv::Size(width,heitht), CV_8UC3);
+    frame.data = bgrData;
+    
+    Mat dstImage;
+    // 进行差值操作
+    resize(frame, dstImage,cv::Size(width*3.5,heitht*3.5), 0, 0,CV_INTER_CUBIC);
+
     return MatToUIImage(dstImage);
     
 }

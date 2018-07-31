@@ -694,6 +694,7 @@
 					../build/universal/include,
 					../../ijkmedia/ijksdl/ffmpeg,
 					../IJKMediaPlayer/LSQMediaManager/mp4v2/include/,
+					../../ijkmedia/ijkplayer/,
 				);
 				INFOPLIST_FILE = "IJKMediaDemo/IJKMediaDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -734,6 +735,7 @@
 					../build/universal/include,
 					../../ijkmedia/ijksdl/ffmpeg,
 					../IJKMediaPlayer/LSQMediaManager/mp4v2/include/,
+					../../ijkmedia/ijkplayer/,
 				);
 				INFOPLIST_FILE = "IJKMediaDemo/IJKMediaDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

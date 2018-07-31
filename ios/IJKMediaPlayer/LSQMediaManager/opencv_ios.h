@@ -19,4 +19,7 @@
 // 图像模糊
 - (UIImage *)blur:(unsigned char*)bgrData width:(int)width heigth:(int)heitht;
 
+// 图像插值
+- (UIImage *)cvInter:(unsigned char*)bgrData width:(int)width heigth:(int)heitht;
+
 @end
