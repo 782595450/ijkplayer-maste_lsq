@@ -73,9 +73,9 @@
     [super viewDidLoad];
 
 
-    [self openvc];
+//    [self openvc];
     
-//    [self openglplay];
+    [self openglplay];
     
 //    [self faceOpencv];
     
@@ -177,24 +177,24 @@
 -(void)movieDecoderDidDecodeFrameSDL:(SDL_VoutOverlay*)frame{
 
     AVFrameData *frameData = [self createFrameData:frame trimPadding:YES];
-    int height = frame->h;
-    int width = frame->w;
-    char *yuvData = malloc(width*height*1.5);
-    memcpy(yuvData, frameData.data0, width*height);
-    memcpy(yuvData+width*height, frameData.data1, width*height/4);
-    memcpy(yuvData+width*height*5/4, frameData.data2, width*height/4);
-
-    unsigned char *pBGR24 = malloc(frame->w*frame->h*3);
-    YV12ToBGR24_FFmpeg(yuvData, pBGR24, width, height);
-    free(yuvData);
+//    int height = frame->h;
+//    int width = frame->w;
+//    char *yuvData = malloc(width*height*1.5);
+//    memcpy(yuvData, frameData.data0, width*height);
+//    memcpy(yuvData+width*height, frameData.data1, width*height/4);
+//    memcpy(yuvData+width*height*5/4, frameData.data2, width*height/4);
+//
+//    unsigned char *pBGR24 = malloc(frame->w*frame->h*3);
+//    YV12ToBGR24_FFmpeg(yuvData, pBGR24, width, height);
+//    free(yuvData);
     
 //    YV12ToBGR24_Native(frameData.data0, frameData.data0, frameData.data0, pBGR24, frame->w, frame->h);
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        openvcImageView.image = [opencvhandle cvInter:pBGR24 width:frame->w heigth:frame->h];
+//        openvcImageView.image = [opencvhandle cvInter:pBGR24 width:frame->w heigth:frame->h];
 //        openvcImageView.image = [opencvhandle element:pBGR24 width:frame->w heigth:frame->h];
 //        [_panoplayer displayYUV420pDatas:[sphere change:frame->pixels[0]] width:frame->w height:frame->h];
-//        [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
+        [_panoplayer displayYUV420pData:frameData width:frame->w height:frame->h];
 //        free(pBGR24);
         
         // 录制视频 有bug
@@ -210,7 +210,7 @@
 //        [encoderManager writeH264Data:frame->sourcePacket->data size:frame->sourcePacket->size];
         
         [self updateTime];
-        free(pBGR24);
+//        free(pBGR24);
     });
     
 
